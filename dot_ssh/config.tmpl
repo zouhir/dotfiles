@@ -1,0 +1,11 @@
+Host *
+  ControlMaster auto
+  ControlPersist yes
+  ControlPath ~/.ssh/control-%r@%h:%p
+  Compression yes
+  ServerAliveInterval 20
+  ServerAliveCountMax 180
+
+{{ if .google }}
+{{-  secret "ssh/google-hosts" -}}
+{{ end }}

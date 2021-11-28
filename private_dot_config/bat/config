@@ -1,0 +1,6 @@
+# credits: https://github.com/caarlos0/dotfiles.fish 
+
+--theme="Dracula"
+-n
+-p
+--plain

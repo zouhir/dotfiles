@@ -1,0 +1,13 @@
+{{ if eq .chezmoi.os "linux" }}
+[".config/tmux"]
+	type = "archive"
+	url = "https://github.com/gpakosz/.tmux/archive/master.tar.gz"
+	exact = true
+	stripComponents = 1
+	refreshPeriod = "672h"
+{{ end }}
+
+[".config/iterm2/iterm2_shell_integration.fish"]
+	type = "file"
+	url = "https://iterm2.com/shell_integration/fish"
+	refreshPeriod = "672h"

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+
+{{ if (and (ne .chezmoi.arch "arm64") (eq .chezmoi.os "linux")) }}
+# volta
+if [ ! "$(command -v volta)" ]; then
+	curl https://get.volta.sh | bash -s -- --skip-setup
+
+	# we need to use volta rightaway, so apoend it to path
+	export VOLTA_HOME="$HOME/.volta"
+	export PATH="$PATH:$VOLTA_HOME/bin"
+fi
+
+volta install node@latest
+{{ end }}
+
+# rust
+if [ ! "$(command -v rustup)" ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+	# we need to use volta rightaway, so apoend it to path
+	export PATH="$PATH:$HOME/.cargo/bin"
+fi
+
+
+# fun cli tool to play gifs in terminal
+if [ ! "$(command -v gif-for-cli)" ]; then
+	pip3 install --user gif-for-cli
+fi
+
+{{ if eq .chezmoi.os "linux" }}
+cargo install exa
+{{ end }}
+
+npm -g install dhost
+npm install -g brotli-size-cli
+npm install -g gzip-size-cli

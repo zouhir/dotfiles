@@ -1,0 +1,68 @@
+# Clear the default welcome message displayed in interactive shells 
+# https://fishshell.com/docs/current/cmds/fish_greeting.html
+set -U fish_greeting
+
+set -gx LANG en_US.UTF-8 
+set -gx LC_COLLATE C.UTF-8
+set -gx LC_CTYPE en_US.UTF-8
+set -gx LC_ALL en_US.UTF-8
+
+set -gx HOMEBREW_BAT 1
+set -gx HOMEBREW_COLOR 1
+set -gx HOMEBREW_NO_AUTO_UPDATE 1
+set -gx HOMEBREW_NO_ANALYTICS 1
+
+set -gx STARSHIP_CONFIG "$HOME/.config/starship/config.toml"
+
+set -gx VOLTA_HOME "$HOME/.volta"
+
+set -gx PYENV_ROOT "$HOME/.pyenv"
+
+set -gx EDITOR "micro"
+set -gx VISUAL "subl -w"
+set -gx PAGER "less -X"
+
+if command -qa bat
+    set -Ux MANPAGER "sh -c 'col -bx | bat -l man -p'"
+end
+
+if command -qa batcat
+    set -Ux MANPAGER "sh -c 'col -bx | batcat -l man -p'"
+end
+
+fish_add_path "/sbin"
+fish_add_path "/usr/sbin"
+fish_add_path "/bin"
+fish_add_path "/usr/local/bin"
+fish_add_path "/usr/local/sbin"
+{{ if .google }}
+fish_add_path "$HOME/homebrew/bin"
+fish_add_path "$HOME/homebrew/sbin"
+{{ else }}
+fish_add_path "/opt/homebrew/bin"
+fish_add_path "/opt/homebrew/sbin"
+{{ end }}
+fish_add_path "$HOME/bin"
+fish_add_path "$HOME/.cargo/bin"
+fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/.chromium/depot_tools"
+fish_add_path "$VOLTA_HOME/bin"
+fish_add_path "$PYENV_ROOT/bin"
+
+status is-login; and pyenv init --path | source
+status is-interactive; and pyenv init - | source
+
+# https://github.com/ajeetdsouza/zoxide
+if command -qs zoxide
+    zoxide init fish | source
+end
+
+# https://github.com/starship/starship#fish
+if command -qs starship
+    starship init fish | source
+end
+
+# https://iterm2.com/documentation-shell-integration.html
+if test -e ~/.config/iterm2/iterm2_shell_integration.fish
+    source ~/.config/iterm2/iterm2_shell_integration.fish
+end

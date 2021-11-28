@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# https://github.com/caarlos0/dotfiles.fish/blob/master/bin/brew-cleanup
+(cd "$(brew --repo)" && git prune && git gc)
+brew cleanup
+rm -rf "$(brew --cache)"

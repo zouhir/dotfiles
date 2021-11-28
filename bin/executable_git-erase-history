@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+echo "This script is quite serious, it removes all commit history"
+echo "You are currently in $PWD"
+echo; read -rsn1 -p "If you are sure you wish to continue, press any key . . ."; echo
+
+# https://stackoverflow.com/a/26000395
+
+git checkout --orphan latest_branch
+git add -A
+git commit -am "initial commit"
+git branch -D main
+git branch -m main
+git push -f origin main

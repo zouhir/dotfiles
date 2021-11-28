@@ -1,0 +1,75 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ if .google }}
+echo "Google computers require authentication."
+echo "Open a new terminal tab or window, and request a new certificate."
+echo; read -rsn1 -p "When ready, press any key to continue . . ."; echo
+{{ end  }}
+
+#######################################
+# macOS Command Line Tools
+#######################################
+if pkgutil --pkgs=com.apple.pkg.CLTools_Executables >/dev/null; then
+		echo "macOS CommandLineTools are installed."
+    echo CommandLineTools: $(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | awk '/version:/ {print $2}')
+else
+	echo "Installing macOS CommandLineTools."
+	echo "The script will continue once installation is finished . . ."
+	xcode-select --install &> /dev/null
+	until pkgutil --pkgs=com.apple.pkg.CLTools_Executables >/dev/null; do
+    sleep 2
+  done
+fi
+
+#######################################
+# Rosetta 2 for arm64 machines
+#######################################
+{{ if (eq .chezmoi.arch "arm64") }}
+# https://github.com/rtrouton/rtrouton_scripts/blob/master/rtrouton_scripts/install_rosetta_on_apple_silicon/install_rosetta_on_apple_silicon.sh
+# Check Rosetta LaunchDaemon. If no LaunchDaemon is found,
+# perform a non-interactive install of Rosetta.
+if pkgutil --pkgs=com.apple.pkg.RosettaUpdateAuto >/dev/null; then
+	echo "Rosetta 2 is already installed."
+    echo CommandLineTools: $(pkgutil --pkg-info=com.apple.pkg.RosettaUpdateAuto | awk '/version:/ {print $2}')
+else
+	echo "Installing Rosetta 2"
+  /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+  if [[ $? -eq 0 ]]; then
+    echo "Rosetta 2 has been successfully installed."
+  else
+    echo "Rosetta 2 installation failed."
+  fi
+fi
+{{ end  }}
+
+#######################################
+# Homebrew
+#######################################
+if [ ! "$(command -v brew)" ]; then
+{{ if (not .google)  }}
+	# Homebrew installer now works out-of-the-box for arm64 macs 
+	#  workarounds for arm64 /opt/homebrew are no longer necessary.
+	echo "Installing homebrew for arm62 (will install in /opt/homebrew."
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	# make brew available in current session
+	{{ if (eq .chezmoi.arch "arm64") }}
+	echo "Also installing x86_64 version of homebrew for compat via Rosetta 2"
+	arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	eval $(/opt/homebrew/bin/brew shellenv)
+	{{ else }}
+	eval $(/usr/local/bin/brew shellenv)
+	{{  end }}
+{{ else  }}
+	# https://github.com/paulirish/dotfiles/blob/de11baa64eea937a0472de785473018fc50f5350/setup-a-new-machine.sh#L130
+	# (if your machine has /usr/local locked down (like google's), you can do this to place everything in ~/homebrew
+	mkdir $HOME/homebrew && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $HOME/homebrew
+	eval $($HOME/homebrew/bin/brew shellenv)
+{{ end  }}
+fi
+
+
+
+{{ end }}

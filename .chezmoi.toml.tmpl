@@ -1,0 +1,48 @@
+{{/* credits: https://github.com/twpayne/dotfiles/blob/master/.chezmoi.toml.tmpl */}}
+{{/* boolean feature flags */}}
+{{- $personal := false -}}
+{{- $google := false -}}
+{{- $name := "" -}}
+{{- $email := "" -}}
+
+{{/* forced by environment variables */}}
+{{- if (env "PERSONAL") -}}
+{{-   $personal = true -}}
+{{- end -}}
+
+{{- if (env "GOOGLE") -}}
+{{-   $google = true -}}
+{{- end -}}
+
+{{/* device "owner" was not set via environment variables */}}
+{{/* check if we have all data or we need to prompt for anything */}}
+{{- if (and (not $personal) (not $google) ) -}}
+{{-   if (hasKey . "google") -}}
+{{-     $google = .google -}}
+{{-   else -}}
+{{-     $google = promptBool "google" -}}
+{{-   end -}}
+{{- end -}}
+
+{{- if (hasKey . "name") -}}
+{{-   $name = .name -}}
+{{- else -}}
+{{-   $name = promptString "name" -}}
+{{- end -}}
+
+{{- if (hasKey . "email") -}}
+{{-   $email = .email -}}
+{{- else -}}
+{{-   $email = promptString "email" -}}
+{{- end -}}
+
+[data]
+  google = {{ $google }}
+  personal = {{ $personal }}
+  name = {{ $name | quote }}
+  email = {{ $email | quote }}
+
+{{ if $google -}}
+[secret]
+  command = "grab-goog-dotfile"
+{{ end -}}

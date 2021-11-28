@@ -1,0 +1,5 @@
+#!/bin/bash
+
+query="$*"
+
+python -m webbrowser "https://www.google.com/search?q=${query// /+}"

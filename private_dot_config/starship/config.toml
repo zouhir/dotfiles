@@ -1,0 +1,40 @@
+# Which is equivalent to
+format = """
+$username\
+$hostname\
+$shlvl\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$golang\
+$nodejs\
+$rust\
+$memory_usage\
+$env_var\
+$custom\
+$cmd_duration\
+$line_break\
+$time\
+$status\
+$shell\
+$character"""
+
+[cmd_duration]
+min_time = 1000
+
+[directory]
+style = "bold blue"
+truncation_length = 2
+truncate_to_repo = false
+
+[git_branch]
+style = "bold green"
+format = "[$symbol$branch]($style) "
+
+[hg_branch]
+style = "bold green"
+format = "[$symbol$branch]($style) "

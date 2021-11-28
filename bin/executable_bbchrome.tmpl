@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# https://www.chromium.org/developers/how-tos/run-chromium-with-flags
+
+if pgrep -xq -- "Google Chrome"; then
+    echo "⚠️ kill curent Chrome process, otherwise disable-extensions flag won't have any effect."
+    echo; read -rsn1 -p "When ready, press any key to continue . . ."; echo
+fi
+
+# redirect all output & errors to dev null
+{{ if eq .chezmoi.os "darwin" }}
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-extensions > /dev/null 2>&1 & 
+{{ else if eq .chezmoi.os "linux" }}
+google-chrome --disable-extensions > /dev/null 2>&1 & 
+{{ end }}

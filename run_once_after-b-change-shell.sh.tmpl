@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ if (and (eq .chezmoi.os "linux") (.google)) }}
+	echo "Please change the chell to `fish` manually."
+	exit 0
+{{ end  }}
+
+chsh -s $(which fish)
