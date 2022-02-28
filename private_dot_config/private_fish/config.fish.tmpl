@@ -48,6 +48,7 @@ fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/.chromium/depot_tools"
 fish_add_path "$VOLTA_HOME/bin"
 fish_add_path "$PYENV_ROOT/bin"
+fish_add_path "$HOME/go/bin"
 
 status is-login; and pyenv init --path | source
 status is-interactive; and pyenv init - | source
@@ -62,7 +63,19 @@ if command -qs starship
     starship init fish | source
 end
 
+# https://github.com/direnv/direnv/blob/master/docs/hook.md
+if command -qs starship
+    direnv hook fish | source
+    set -g direnv_fish_mode disable_arrow
+end 
+
+
 # https://iterm2.com/documentation-shell-integration.html
 if test -e ~/.config/iterm2/iterm2_shell_integration.fish
     source ~/.config/iterm2/iterm2_shell_integration.fish
+end
+
+# https://buildpacks.io/docs/tools/pack/#:~:text=source%20(pack%20completion%20%2D%2Dshell%20fish)
+if command -qs pack
+    source (pack completion --shell fish)
 end
