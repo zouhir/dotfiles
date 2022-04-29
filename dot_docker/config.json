@@ -1,5 +1,5 @@
 {
-  "credsStore" : "desktop"
+  "credsStore" : "desktop",
   "credHelpers": {
     "asia.gcr.io": "gcloud",
     "eu.gcr.io": "gcloud",
