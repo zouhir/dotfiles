@@ -1,32 +1,42 @@
-{{ if .google -}}
 #!/bin/bash
 
 set -eufo pipefail
 
-#######################################
-# Google scripts valult
-#######################################
+{{ if .google -}}
 
-echo "Follow instructions at https://go/google-dotfiles-installer"
-echo "Script will continue once all required binaries are in place"
-echo "Waiting . . ."
+#######################################
+# Zouhir's Google scripts valult
+#######################################
 
 bin_dir="$HOME/.local/bin"
 
-while [ ! -f "$bin_dir/grab-goog-dotfile" ]
-do
-  sleep 2
-done
+if [[ ! -f "$bin_dir/grab-goog-dotfile" && ! "$(command -v gob-curl)" ]]; then
+    echo "gob-curl was not found."
+    echo "Follow instructions at https://go/google-dotfiles-installer."
+    echo "Script will automatically continue once all required binaries are in place."
+    echo "Waiting . . ."
 
-if [[ ! -x "$bin_dir/grab-goog-dotfile" ]]
-then
+    while [ ! -f "$bin_dir/grab-goog-dotfile" ]
+    do
+      sleep 2
+    done
+fi
+
+if [[ ! -f "$bin_dir/grab-goog-dotfile" && "$(command -v gob-curl)" ]]; then
+  gob-curl \
+    https://user.git.corp.google.com/zouhir/dotfiles/+/refs/heads/main/grab-goog-dotfile?format=text \
+    | base64 --decode \
+    >> $bin_dir/grab-goog-dotfile
+fi
+
+if [[ ! -x "$bin_dir/grab-goog-dotfile" ]]; then
     echo "Binary found, but is not executable"
     echo "Give excution permission.."
     chmod a+x "$bin_dir/grab-goog-dotfile"
 else
-    echo "Binary found"
+    echo "Binary found and is executable"
 fi
 
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$bin_dir"
 
 {{ end -}}
