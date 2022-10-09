@@ -1,12 +1,12 @@
 #!/bin/bash
 
-{{- if (eq .chezmoi.os "darwin") -}}
+{{if (eq .chezmoi.os "darwin") -}}
 sudo softwareupdate -i -a
 
 brew update
 brew upgrade
 brew cleanup
-{{- end -}}
+{{end -}}
 
 npm install npm -g
 npm update -g

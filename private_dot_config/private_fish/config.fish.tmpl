@@ -16,8 +16,6 @@ set -gx STARSHIP_CONFIG "$HOME/.config/starship/config.toml"
 
 set -gx VOLTA_HOME "$HOME/.volta"
 
-set -gx PYENV_ROOT "$HOME/.pyenv"
-
 set -gx EDITOR "micro"
 set -gx VISUAL "subl -w"
 set -gx PAGER "less -X"
@@ -47,11 +45,7 @@ fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/.chromium/depot_tools"
 fish_add_path "$VOLTA_HOME/bin"
-fish_add_path "$PYENV_ROOT/bin"
 fish_add_path "$HOME/go/bin"
-
-status is-login; and pyenv init --path | source
-status is-interactive; and pyenv init - | source
 
 # https://github.com/ajeetdsouza/zoxide
 if command -qs zoxide
