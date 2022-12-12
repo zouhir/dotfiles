@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [[ -f "$HOME/bin/assets/whoa.gif" ]]; then
-	gif-for-cli --display-mode=256 "$HOME/bin/assets/whoa.gif"
-else
-	echo "file required to play the expression was not found."
-fi
