@@ -1,4 +1,5 @@
 #!/bin/bash
+# Credit: https://github.com/twpayne/dotfiles/blob/master/install.sh
 
 if [ ! "$(command -v chezmoi)" ]; then
   bin_dir="$HOME/.local/bin"

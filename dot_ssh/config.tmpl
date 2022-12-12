@@ -5,6 +5,7 @@ Host *
   Compression yes
   ServerAliveInterval 20
   ServerAliveCountMax 180
+  ForwardAgent yes
 
 {{ if .google }}
 {{-  secret "embed/ssh/google-hosts" -}}
