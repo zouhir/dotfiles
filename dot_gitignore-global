@@ -20,10 +20,3 @@ node_modules/
 # npm
 npm-debug.log
 package-lock.json
-
-# Text editors
-*.sublime-project
-*.sublime-workspace
-*.code-workspace
-*.vi
-.idea
