@@ -5,9 +5,7 @@ set -eufo pipefail
 
 {{ $brews := list
        "bat"
-       "buildpacks/tap/pack"
        "curl"
-       "direnv"
        "exa"
        "ffmpeg"
        "fish"
@@ -22,25 +20,15 @@ set -eufo pipefail
        "hostess"
        "hugo"
        "imagemagick" 
-       "kind"
-       "kubectl"
-       "kustomize"
        "libjpeg"
        "micro"
-       "modd"
        "node"
-       "pipx"
-       "pyenv"
-       "rbenv"
-       "skaffold"
        "starship"
        "tmux"
        "wget"
        "zlib"
        "zoxide" -}}
 {{ $casks := list
-       "1password"
-       "1password-cli"
        "alfred"
        "bettertouchtool"
        "dash"
@@ -51,9 +39,7 @@ set -eufo pipefail
        "jetbrains-toolbox"
        "kaleidoscope"
        "rectangle"
-       "spotify"
-       "sublime-text"
-       "visual-studio-code" -}}
+       "spotify" -}}
 
 
 {{ if .personal -}}

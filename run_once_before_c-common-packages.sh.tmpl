@@ -8,7 +8,7 @@ set -eufo pipefail
 if [ ! "$(command -v volta)" ]; then
 	curl https://get.volta.sh | bash -s -- --skip-setup
 
-	# we need to use volta rightaway, so apoend it to path
+	# we need to use volta rightaway, so append it to path
 	export VOLTA_HOME="$HOME/.volta"
 	export PATH="$PATH:$VOLTA_HOME/bin"
 fi
@@ -16,18 +16,12 @@ fi
 volta install node@latest
 {{ end }}
 
-# rust
+# rust: cargo required for some cli tools
 if [ ! "$(command -v rustup)" ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 	# we need to use volta rightaway, so apoend it to path
 	export PATH="$PATH:$HOME/.cargo/bin"
-fi
-
-
-# fun cli tool to play gifs in terminal
-if [ ! "$(command -v gif-for-cli)" ]; then
-	pip3 install --user gif-for-cli
 fi
 
 {{ if eq .chezmoi.os "linux" }}
@@ -37,8 +31,3 @@ cargo install exa
 npm -g install dhost
 npm install -g brotli-size-cli
 npm install -g gzip-size-cli
-
-# TermUI based Go apps monitor using 
-# expvars variables (/debug/vars). Quickest way to monitor your Go app.
-# https://github.com/divan/expvarmon
-go get github.com/divan/expvarmon
