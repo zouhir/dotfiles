@@ -2,7 +2,7 @@
 
 set -eufo pipefail
 
-{{ if .google -}}
+{{ if .google }}
 
 #######################################
 # Zouhir's Google scripts valult
@@ -22,12 +22,12 @@ if [[ ! -f "$bin_dir/grab-goog-dotfile" && ! "$(command -v gob-curl)" ]]; then
     done
 fi
 
-if [[ ! -f "$bin_dir/grab-goog-dotfile" && "$(command -v gob-curl)" ]]; then
+rm -f "$bin_dir/grab-goog-dotfile"
+
   gob-curl \
     https://user.git.corp.google.com/zouhir/dotfiles/+/refs/heads/main/grab-goog-dotfile?format=text \
     | base64 --decode \
     >> $bin_dir/grab-goog-dotfile
-fi
 
 if [[ ! -x "$bin_dir/grab-goog-dotfile" ]]; then
     echo "Binary found, but is not executable"
@@ -39,4 +39,4 @@ fi
 
 export PATH="$PATH:$bin_dir"
 
-{{ end -}}
+{{ end }}
