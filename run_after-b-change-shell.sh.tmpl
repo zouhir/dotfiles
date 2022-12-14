@@ -3,9 +3,8 @@
 set -eufo pipefail
 
 {{ if (and (eq .chezmoi.os "linux") (.google)) }}
-	echo "Please change the shell to `fish` manually."
-	exit 0
+echo "Please change the shell to fish manually."
 {{ else }}
-	chsh -s $(which fish)
+chsh -s $(which fish)
 {{ end  }}
 
