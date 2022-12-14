@@ -26,6 +26,7 @@ fi
 
 {{ if eq .chezmoi.os "linux" }}
 cargo install exa
+cargo install starship --locked
 {{ end }}
 
 npm -g install dhost
