@@ -42,7 +42,7 @@
   name = {{ $name | quote }}
   email = {{ $email | quote }}
 
-{{ if $google -}}
+{{ if (and (eq .chezmoi.os "linux") $google) -}}
 [secret]
-  command = "grab-goog-dotfile"
+  command = "/usr/local/google/home/{{$name}}/.local/bin/grab-goog-dotfile"
 {{ end -}}
