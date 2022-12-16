@@ -24,10 +24,10 @@ fi
 
 rm -f "$bin_dir/grab-goog-dotfile"
 
-  gob-curl \
-    https://user.git.corp.google.com/zouhir/dotfiles/+/refs/heads/main/grab-goog-dotfile?format=text \
-    | base64 --decode \
-    >> $bin_dir/grab-goog-dotfile
+gob-curl \
+  https://user.git.corp.google.com/zouhir/dotfiles/+/refs/heads/main/grab-goog-dotfile?format=text \
+  | base64 --decode \
+  >> $bin_dir/grab-goog-dotfile
 
 if [[ ! -x "$bin_dir/grab-goog-dotfile" ]]; then
     echo "Binary found, but is not executable"

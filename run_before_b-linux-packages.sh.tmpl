@@ -24,7 +24,9 @@ done
 curl -sS https://webinstall.dev/zoxide | bash
 
 # Starship
+if [ ! "$(command -v starship)" ]; then
 curl -sS https://starship.rs/install.sh | sh
+fi
 
 {{ end -}}
 {{ end -}}
