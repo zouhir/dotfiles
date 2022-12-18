@@ -17,7 +17,6 @@ set -gx STARSHIP_CONFIG "$HOME/.config/starship/config.toml"
 set -gx VOLTA_HOME "$HOME/.volta"
 
 set -gx EDITOR "micro"
-set -gx VISUAL "subl -w"
 set -gx PAGER "less -X"
 
 if command -qa bat
@@ -57,19 +56,7 @@ if command -qs starship
     starship init fish | source
 end
 
-# https://github.com/direnv/direnv/blob/master/docs/hook.md
-if command -qs starship
-    direnv hook fish | source
-    set -g direnv_fish_mode disable_arrow
-end 
-
-
 # https://iterm2.com/documentation-shell-integration.html
 if test -e ~/.config/iterm2/iterm2_shell_integration.fish
     source ~/.config/iterm2/iterm2_shell_integration.fish
-end
-
-# https://buildpacks.io/docs/tools/pack/#:~:text=source%20(pack%20completion%20%2D%2Dshell%20fish)
-if command -qs pack
-    source (pack completion --shell fish)
 end

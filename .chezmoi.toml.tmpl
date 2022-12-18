@@ -44,5 +44,9 @@
 
 {{ if $google -}}
 [secret]
-  command = "grab-goog-dotfile"
+{{ if (eq .chezmoi.os "linux") }}
+  command = "/usr/local/google/home/{{$name}}/.local/bin/grab-goog-dotfile"
+{{ else }}
+command = "/Users/{{$name}}/.local/bin/grab-goog-dotfile"
+{{ end }}
 {{ end -}}

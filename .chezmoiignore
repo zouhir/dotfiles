@@ -3,3 +3,8 @@
 {{ else }}
 .ssh
 {{ end }}
+
+{{ if .personal }}
+.config/hg
+.hgrc
+{{ end }}

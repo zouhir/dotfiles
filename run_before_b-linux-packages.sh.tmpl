@@ -1,0 +1,32 @@
+{{ if (eq .chezmoi.os "linux") -}}
+{{ if (eq .chezmoi.osRelease.id "debian") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+repositories=()
+
+packages=(
+       curl
+       bat
+       fish
+       micro
+       wget
+       fzf
+       tmux
+)
+
+for repository in ${repositories[@]}; do
+       sudo add-apt-repository -y $repository
+done
+
+# Zoxide (apt install require Ubuntu 21.04+)
+curl -sS https://webinstall.dev/zoxide | bash
+
+# Starship
+if [ ! "$(command -v starship)" ]; then
+curl -sS https://starship.rs/install.sh | sh
+fi
+
+{{ end -}}
+{{ end -}}
