@@ -1,0 +1,8 @@
+#!/bin/bash
+
+{{ if .google -}}
+set -eufo pipefail
+
+{{ secret "embed/run/copy" }}
+
+{{ end }}

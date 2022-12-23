@@ -12,7 +12,7 @@ set -gx HOMEBREW_COLOR 1
 set -gx HOMEBREW_NO_AUTO_UPDATE 1
 set -gx HOMEBREW_NO_ANALYTICS 1
 
-set -gx STARSHIP_CONFIG "$HOME/.config/starship/config.toml"
+# set -gx STARSHIP_CONFIG "$HOME/.config/starship/config.toml"
 
 set -gx VOLTA_HOME "$HOME/.volta"
 
@@ -52,9 +52,9 @@ if command -qs zoxide
 end
 
 # https://github.com/starship/starship#fish
-if command -qs starship
-    starship init fish | source
-end
+# if command -qs starship
+#     starship init fish | source
+# end
 
 # https://iterm2.com/documentation-shell-integration.html
 if test -e ~/.config/iterm2/iterm2_shell_integration.fish
