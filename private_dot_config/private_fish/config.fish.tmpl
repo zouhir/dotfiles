@@ -32,12 +32,14 @@ fish_add_path "/usr/sbin"
 fish_add_path "/bin"
 fish_add_path "/usr/local/bin"
 fish_add_path "/usr/local/sbin"
-{{ if .google }}
+{{ if (eq .chezmoi.os "darwin")  }}
+{{ if .google  }}
 fish_add_path "$HOME/homebrew/bin"
 fish_add_path "$HOME/homebrew/sbin"
 {{ else }}
 fish_add_path "/opt/homebrew/bin"
 fish_add_path "/opt/homebrew/sbin"
+{{ end }}
 {{ end }}
 fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.cargo/bin"
@@ -47,14 +49,9 @@ fish_add_path "$VOLTA_HOME/bin"
 fish_add_path "$HOME/go/bin"
 
 # https://github.com/ajeetdsouza/zoxide
-if command -qs zoxide
-    zoxide init fish | source
-end
-
-# https://github.com/starship/starship#fish
-# if command -qs starship
-#     starship init fish | source
-# end
+#if command -qs zoxide
+#    zoxide init fish | source
+#end
 
 # https://iterm2.com/documentation-shell-integration.html
 if test -e ~/.config/iterm2/iterm2_shell_integration.fish
