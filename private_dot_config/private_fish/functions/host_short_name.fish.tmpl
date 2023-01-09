@@ -1,0 +1,7 @@
+{{ if .google }}
+{{-  secret "embed/fish/functions/host_short_name.fish" -}}
+{{ else }}
+function host_short_name
+  hostname -s
+end
+{{ end  }}
