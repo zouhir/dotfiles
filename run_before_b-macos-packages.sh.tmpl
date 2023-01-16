@@ -3,13 +3,14 @@
 
 set -eufo pipefail
 
+brew tap homebrew/cask-fonts
+
 {{ $brews := list
-       "bat"
        "curl"
-       "exa"
        "ffmpeg"
        "fish"
        "fzf"
+       "font-source-code-pro"
        "gh"
        "git-delta"
        "git-lfs"
@@ -18,12 +19,9 @@ set -eufo pipefail
        "go"
        "hugo"
        "libjpeg"
-       "micro"
-       "node"
        "starship"
        "wget"
-       "zlib"
-       "zoxide" -}}
+       "zlib" -}}
 {{ $casks := list
        "alfred"
        "bettertouchtool"
