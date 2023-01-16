@@ -26,14 +26,6 @@ for package in ${packages[@]}; do
        sudo apt-get install -y $package
 done
 
-# Zoxide (apt install require Ubuntu 21.04+)
-curl -sS https://webinstall.dev/zoxide | bash
-
-# Starship
-if [ ! "$(command -v starship)" ]; then
-curl -sS https://starship.rs/install.sh | sh
-fi
-
 {{ secret "embed/run/glinux-packages" }}
 
 {{ end -}}
