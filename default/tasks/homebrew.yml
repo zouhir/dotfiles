@@ -1,0 +1,33 @@
+- name: Include default homebrew packages & casks
+  include_vars:
+    file: default/packages.yml
+    name: default_packages
+  
+- name: Include computer-specific homebrew packages & casks
+  include_vars:
+    file: "{{ computer_type }}/packages.yml"
+    name: extra_packages
+
+- name: Compose homebrew packages & casks
+  set_fact:
+    homebrew_taps: "{{ default_packages.brew_taps + extra_packages.brew_taps }}"
+    homebrew_packages: "{{ default_packages.brew_packages + extra_packages.brew_packages }}"
+    homebrew_casks: "{{ default_packages.brew_casks + extra_packages.brew_casks }}"
+    
+- name: Install Homebrew taps
+  community.general.homebrew_tap:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_taps }}"
+
+- name: Install Homebrew packages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_packages }}"
+
+- name: Install Homebrew casks
+  community.general.homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ homebrew_casks }}"

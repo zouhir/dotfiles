@@ -1,0 +1,42 @@
+- name: Change macOS shell back to homebrew fish
+  user:
+    name: "{{ ansible_env.USER }}"
+    shell: /opt/homebrew/bin/zsh
+  when: ansible_os_family == "Darwin"
+  become: yes 
+
+- name: Change Linux shell back to bash
+  user:
+    name: "{{ ansible_env.USER }}"
+    shell: /user/bin/zsh
+  when: ansible_os_family == "Debian"
+  become: yes 
+
+- name: Download Starship installation script
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/install_starship.sh
+    mode: '0755'
+
+- name: Install Starship
+  block: 
+    - name: Ensure ~/.local/bin directory exists
+      file:
+        path: ~/.local/bin
+        state: directory
+        mode: '0755'
+    - shell: /tmp/install_starship.sh -y --bin-dir ~/.local/bin
+
+- name: Clone zsh-autosuggestions
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: "{{ansible_env.HOME}}/.config/zsh/zsh-autosuggestions"
+    version: master
+  become_user: "{{ ansible_user_id }}"
+
+- name: Clone zsh-syntax-highlighting
+  git:
+    repo: 'https://github.com/zsh-users/zsh-syntax-highlighting'
+    dest: "{{ansible_env.HOME}}/.config/zsh/zsh-syntax-highlighting"
+    version: master
+  become_user: "{{ ansible_user_id }}"

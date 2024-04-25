@@ -1,0 +1,44 @@
+- hosts: localhost
+  connection: local
+  gather_facts: yes
+  vars:
+    computer_type: "{{computer_type}}"
+    computer_kind: "{{computer_kind}}"
+    work_dotfiles_url: "{{work_dotfiles_url}}"
+
+  pre_tasks:
+    - name: Update Homebrew
+      shell: brew update
+      when: ansible_os_family == "Darwin"
+    - name: Upgrade all Homebrew packages
+      shell: brew upgrade
+      when: ansible_os_family == "Darwin"
+    - name: Update linux cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+  tasks:
+    - name: Fetch private submodules (e.g. work related dotfiles) if necessary
+      include_tasks: default/tasks/init_submodules.yml
+      vars:
+        computer_type: "{{computer_type}}"
+        work_dotfiles_url: "{{work_dotfiles_url}}"
+    - include_tasks: default/tasks/homebrew.yml
+      vars:
+        computer_type: "{{computer_type}}"
+      when: ansible_os_family == "Darwin"
+    - include_tasks: default/tasks/apt.yml
+      vars:
+        computer_type: "{{computer_type}}"
+      when: ansible_os_family == "Debian"
+    - include_tasks: default/tasks/shell.yml
+    - include_tasks: default/tasks/node.yml
+    - name: Include dotfiles task
+      include_tasks: default/tasks/dotfiles.yml
+      vars:
+        computer_type: "{{computer_type}}"
+        computer_kind: "{{computer_kind}}"
+        work_dotfiles_url: "{{work_dotfiles_url}}"
+    - include_tasks: default/tasks/stow.yml
+

@@ -1,0 +1,7 @@
+- name: Add and update work dotfiles submodule
+  git:
+    repo: "{{ work_dotfiles_url }}"
+    dest: "{{ playbook_dir }}/{{ computer_type }}"
+    version: HEAD
+    update: yes
+  when: computer_type == "work"

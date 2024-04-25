@@ -1,0 +1,19 @@
+- name: Include default apt packages
+  include_vars:
+    file: default/packages.yml
+    name: default_packages
+  
+- name: Include computer-specific apt packages
+  include_vars:
+    file: "{{ computer_type }}/packages.yml"
+    name: extra_packages
+
+- name: Compose apt packages
+  set_fact:
+    apt_packages: "{{ default_packages.apt_packages + extra_packages.apt_packages }}"
+    
+- name: Install apt packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ apt_packages }}"

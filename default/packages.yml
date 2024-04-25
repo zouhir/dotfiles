@@ -1,0 +1,25 @@
+brew_taps:
+  - homebrew/cask-fonts
+
+brew_packages:
+  - bash
+  - bash-completion@2
+  - fzf
+  - gh
+  - git
+  - go
+  - nvim
+  - stow
+  - volta
+  - wget
+  - zsh
+  - zoxide
+
+brew_casks:
+  - alacritty
+  - alfred
+  - bettertouchtool
+  - font-jetbrains-mono
+  - iterm2
+
+apt_packages: []

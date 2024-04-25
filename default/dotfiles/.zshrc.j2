@@ -1,0 +1,117 @@
+################################################
+# Environment variables.
+################################################
+export COMPUTER_TYPE={{computer_type}}
+export COMPUTER_KIND={{computer_kind}}
+export WORK_DOTFILES_URL={{work_dotfiles_url}}
+
+{% if ansible_os_family == "Darwin" %}
+export HOMEBREW_COLOR=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_EMOJI=1
+export HOMEBREW_PREFIX=/opt/homebrew
+{% endif %}
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+# Homebrew (if applicable)
+
+
+################################################
+# Completion
+################################################
+fpath+=("${XDG_CONFIG_HOME}/zsh/completions")
+
+# Enable command auto completion.
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME
+# matches case insensitive for lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
+
+bindkey "^[[Z" reverse-menu-complete
+
+if [[ -d ${XDG_CONFIG_HOME}/zsh/zsh-autosuggestions ]]; then
+  source "${XDG_CONFIG_HOME}/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+################################################
+# History
+################################################
+HISTFILE=${XDG_CACHE_HOME}/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_SPACE
+
+################################################
+# PATH
+################################################
+path_dirs=(
+  "/bin"
+  "/sbin"
+  "/usr/bin"
+  "/usr/sbin"
+  "/usr/local/bin"
+  "/opt/homebrew/bin"
+  "/opt/homebrew/sbin"
+  "$HOME/bin"
+  "$HOME/.local/bin"
+  "$HOME/go/bin"
+)
+
+for dir in $path_dirs; do
+  if [[ -d $dir ]]; then
+    path+=$dir
+  fi
+done
+
+typeset -U path
+export PATH
+
+# MacOS `ls` Colors. Not needed for Debain.
+{% if ansible_os_family == "Darwin" %}
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+{% endif %}
+
+#Aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+fi
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Editor.
+export EDITOR=nvim
+
+# Key bindings
+bindkey -v
+
+# Options
+unsetopt BEEP
+
+if [[ -d ${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting ]]; then
+  source "${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"

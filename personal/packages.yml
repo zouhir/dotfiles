@@ -1,0 +1,11 @@
+brew_taps: []
+
+brew_packages:
+  - docker
+  - tmux
+
+brew_casks:
+  - google-chrome
+
+
+apt_packages: []

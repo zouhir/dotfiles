@@ -1,0 +1,9 @@
+- name: Symlink dotfiles to home
+  vars:
+    home_dir: "{{ ansible_env.HOME }}"
+    dotfiles_dir: "{{ playbook_dir }}"
+  shell: |
+    cd {{ dotfiles_dir }} && stow -v -t {{ home_dir }} -R out
+  args:
+    executable: /bin/bash
+  become: no

@@ -1,0 +1,80 @@
+- name: Load variables from a YAML file
+  include_vars:
+    file: "{{computer_type}}/env.yml"
+
+- name: Clean old compiled files
+  shell: rm -rf out
+
+# TODO(zouhir): Maybe ansible should be able to create dest directory if it did not exist.
+- name: Create necessary dirs
+  shell: |
+    mkdir -p -m 755 out/.config/alacritty
+    mkdir -p -m 755 out/.ssh
+
+# - name: Ensure out directory exists
+#   file:
+#     path: "out"
+#     state: "directory"
+#     mode: 0755
+
+# - name: Find all compiled files
+#   find:
+#     paths: "out"
+#     recurse: yes
+#     hidden: yes
+#   register: old_dotfiles_dist
+
+# - name: Remove already compiled files
+#   file:
+#     path: "{{ item.path }}"
+#     state: absent
+#   with_items: "{{ old_dotfiles_dist.files | default([]) }}"
+#   when: (old_dotfiles_dist.files | default([])) | length > 0
+
+- name: Find all dotfiles in the source directory
+  find:
+    paths: "default/dotfiles"
+    recurse: yes
+    hidden: yes
+  register: dotfiles_src
+
+# - name: Create fish out dir & function subdir
+#   file:
+#     path: "out/fish/functions"
+#     state: "directory"
+#     mode: 0755
+
+# - name: Create fish out dir & aliases subdir
+#   file:
+#     path: "out/fish/aliases"
+#     state: "directory"
+#     mode: 0755
+
+# - name: Create alacritty out dir
+#   file:
+#     path: "out/alacritty"
+#     state: directory
+#     mode: 0755
+
+- name: Compile and copy template dotfiles.
+  template:
+    src: "{{ item.path }}"
+    dest: "out/{{ item.path | regex_replace('^default/dotfiles', '') | regex_replace('\\.j2$', '') }}"
+  with_items: "{{ dotfiles_src.files | default([]) }}"
+  when: 
+    - dotfiles_src.matched > 0
+    - item.path is match(".*j2$")
+
+- name: Copy non-template dotfiles.
+  template:
+    src: "{{ item.path }}"
+    dest: "out/{{ item.path | regex_replace('^default/dotfiles', '') }}"
+  with_items: "{{ dotfiles_src.files | default([]) }}"
+  when: 
+    - dotfiles_src.matched > 0
+    - item.path is not match(".*j2$")
+
+- name: Download catppuccin-mocha.toml for Alacritty
+  get_url:
+    url: https://github.com/catppuccin/alacritty/raw/main/catppuccin-mocha.toml
+    dest: out/.config/alacritty/catppuccin-mocha.toml
