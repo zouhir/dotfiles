@@ -2,8 +2,6 @@ brew_taps:
   - homebrew/cask-fonts
 
 brew_packages:
-  - bash
-  - bash-completion@2
   - fzf
   - gh
   - git
