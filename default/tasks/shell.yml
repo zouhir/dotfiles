@@ -1,15 +1,8 @@
-- name: Change macOS shell back to homebrew fish
+- name: Change macOS shell back to homebrew zsh
   user:
     name: "{{ ansible_env.USER }}"
     shell: /opt/homebrew/bin/zsh
   when: ansible_os_family == "Darwin"
-  become: yes 
-
-- name: Change Linux shell back to bash
-  user:
-    name: "{{ ansible_env.USER }}"
-    shell: /user/bin/zsh
-  when: ansible_os_family == "Debian"
   become: yes 
 
 - name: Download Starship installation script
