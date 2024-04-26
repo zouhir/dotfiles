@@ -7,5 +7,4 @@ brew_packages:
 brew_casks:
   - google-chrome
 
-
 apt_packages: []

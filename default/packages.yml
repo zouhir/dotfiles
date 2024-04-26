@@ -20,4 +20,7 @@ brew_casks:
   - font-jetbrains-mono
   - iterm2
 
-apt_packages: []
+apt_packages:
+  - nodejs
+  - tmux
+  - zsh

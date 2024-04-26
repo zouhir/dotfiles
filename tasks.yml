@@ -36,6 +36,7 @@
       when: ansible_os_family == "Debian"
     - include_tasks: default/tasks/shell.yml
     - include_tasks: default/tasks/node.yml
+      when: ansible_os_family == "Darwin"
     - name: Include dotfiles task
       include_tasks: default/tasks/dotfiles.yml
       vars:
