@@ -1,5 +1,12 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
+import = [
+    "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
 [shell]
 program = "/opt/homebrew/bin/zsh"
 args = ["-l"]
@@ -16,40 +23,3 @@ bold = { style = "Bold" }
 italic = { style = "Italic" }
 bold_italic = { style = "Bold Italic" }  # Inherits family from normal, Default style: Bold Italic
 size = 12.0
-
-# github Alacritty Colors
-
-# Default colors
-[colors.primary]
-background = '#24292e'
-foreground = '#d1d5da'
-
-# Normal colors
-[colors.normal]
-black   = '#586069'
-red     = '#ea4a5a'
-green   = '#34d058'
-yellow  = '#ffea7f'
-blue    = '#2188ff'
-magenta = '#b392f0'
-cyan    = '#39c5cf'
-white   = '#d1d5da'
-
-# Bright colors
-[colors.bright]
-black   = '#959da5'
-red     = '#f97583'
-green   = '#85e89d'
-yellow  = '#ffea7f'
-blue    = '#79b8ff'
-magenta = '#b392f0'
-cyan    = '#56d4dd'
-white   = '#fafbfc'
-
-[[colors.indexed_colors]]
-index = 16
-color = '#d18616'
-
-[[colors.indexed_colors]]
-index = 17
-color = '#f97583'

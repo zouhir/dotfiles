@@ -109,4 +109,4 @@ fi
 
 ansible-galaxy collection install community.general
 
-ansible-playbook tasks.yml --ask-become-pass -e "computer_type=${COMPUTER_TYPE}" -e "computer_kind=${COMPUTER_KIND}" -e "work_dotfiles_url=${WORK_DOTFILES_URL}"
+ansible-playbook tasks.yml --ask-become-pass -e "computer_type=${COMPUTER_TYPE}" -e "computer_kind=${COMPUTER_KIND}" -e "work_dotfiles_url=${WORK_DOTFILES_URL}" -e "py_version=${py_version}"

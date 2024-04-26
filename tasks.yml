@@ -5,6 +5,7 @@
     computer_type: "{{computer_type}}"
     computer_kind: "{{computer_kind}}"
     work_dotfiles_url: "{{work_dotfiles_url}}"
+    py_version: "{{py_version}}"
 
   pre_tasks:
     - name: Update Homebrew
@@ -40,5 +41,5 @@
         computer_type: "{{computer_type}}"
         computer_kind: "{{computer_kind}}"
         work_dotfiles_url: "{{work_dotfiles_url}}"
+        py_version: "{{py_version}}"
     - include_tasks: default/tasks/stow.yml
-

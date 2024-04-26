@@ -4,6 +4,7 @@
 export COMPUTER_TYPE={{computer_type}}
 export COMPUTER_KIND={{computer_kind}}
 export WORK_DOTFILES_URL={{work_dotfiles_url}}
+export py_version={{py_version}}
 
 {% if ansible_os_family == "Darwin" %}
 export HOMEBREW_COLOR=1
@@ -71,6 +72,7 @@ path_dirs=(
   "$HOME/bin"
   "$HOME/.local/bin"
   "$HOME/go/bin"
+  "$HOME/Library/Python/$py_version/bin"
 )
 
 for dir in $path_dirs; do
