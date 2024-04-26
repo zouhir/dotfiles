@@ -9,6 +9,7 @@
 - name: Create necessary dirs
   shell: |
     mkdir -p -m 755 out/.config/alacritty
+    mkdir -p -m 755 out/.config/iterm2
     mkdir -p -m 755 out/.ssh
 
 # - name: Ensure out directory exists
@@ -78,3 +79,8 @@
   get_url:
     url: https://github.com/catppuccin/alacritty/raw/main/catppuccin-mocha.toml
     dest: out/.config/alacritty/catppuccin-mocha.toml
+
+- name: Download catppuccin-mocha.toml for iTerm2
+  get_url:
+    url: https://github.com/catppuccin/iterm/raw/main/colors/catppuccin-mocha.itermcolors
+    dest: out/.config/iterm2/catppuccin-mocha.itermcolors
