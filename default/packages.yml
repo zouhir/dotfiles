@@ -22,5 +22,6 @@ brew_casks:
 
 apt_packages:
   - nodejs
+  - stow
   - tmux
   - zsh
