@@ -3,14 +3,18 @@
     file: "{{computer_type}}/env.yml"
 
 - name: Clean old compiled files
-  shell: rm -rf out
+  shell: |
+    rm -rf out
+    rm -rf ~/.tmux/plugins/tpm
 
 # TODO(zouhir): Maybe ansible should be able to create dest directory if it did not exist.
 - name: Create necessary dirs
   shell: |
     mkdir -p -m 755 out/.config/alacritty
     mkdir -p -m 755 out/.config/iterm2
+    mkdir -p -m 755 out/.config/tmux/
     mkdir -p -m 755 out/.ssh
+    mkdir -p -m 755 ~/.tmux/plugins/tpm
 
 - name: Find all dotfiles in the source directory
   find:
@@ -46,3 +50,9 @@
   get_url:
     url: https://github.com/catppuccin/iterm/raw/main/colors/catppuccin-mocha.itermcolors
     dest: out/.config/iterm2/catppuccin-mocha.itermcolors
+
+- name: Clone TPM repository
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
+    depth: 1

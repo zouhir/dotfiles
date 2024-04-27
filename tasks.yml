@@ -21,11 +21,13 @@
       when: ansible_os_family == "Debian"
 
   tasks:
-    - name: Fetch private submodules (e.g. work related dotfiles) if necessary
-      include_tasks: default/tasks/init_submodules.yml
-      vars:
-        computer_type: "{{computer_type}}"
-        work_dotfiles_url: "{{work_dotfiles_url}}"
+    - block:
+      - include_tasks: default/tasks/init_submodules.yml
+        vars:
+          computer_type: "{{computer_type}}"
+          work_dotfiles_url: "{{work_dotfiles_url}}"
+      tags:
+        - dotfiles
     - include_tasks: default/tasks/homebrew.yml
       vars:
         computer_type: "{{computer_type}}"
@@ -37,11 +39,16 @@
     - include_tasks: default/tasks/shell.yml
     - include_tasks: default/tasks/node.yml
       when: ansible_os_family == "Darwin"
-    - name: Include dotfiles task
-      include_tasks: default/tasks/dotfiles.yml
-      vars:
-        computer_type: "{{computer_type}}"
-        computer_kind: "{{computer_kind}}"
-        work_dotfiles_url: "{{work_dotfiles_url}}"
-        py_version: "{{py_version}}"
-    - include_tasks: default/tasks/stow.yml
+    - block:
+      - include_tasks: default/tasks/dotfiles.yml
+        vars:
+          computer_type: "{{computer_type}}"
+          computer_kind: "{{computer_kind}}"
+          work_dotfiles_url: "{{work_dotfiles_url}}"
+          py_version: "{{py_version}}"
+      tags:
+          - dotfiles
+    - block:
+      - include_tasks: default/tasks/stow.yml
+      tags:
+          - dotfiles
