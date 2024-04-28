@@ -76,10 +76,10 @@ if [[ -d ${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting ]]; then
   source "${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
-source {XDG_CONFIG_HOME}/zsh/aliases.zsh
+source "${ZDOTDIR}/aliases.zsh"
 
-if [[ -d ~/.config/zsh/functions ]]; then
-  for file in ~/.config/zsh/functions/*.zsh; do
+if [[ -d "${ZDOTDIR}/functions" ]]; then
+  for file in "${ZDOTDIR}/functions"/*.zsh; do
       source $file
   done
 fi
