@@ -2,6 +2,7 @@ brew_taps:
   - homebrew/cask-fonts
 
 brew_packages:
+  - fd
   - fzf
   - gh
   - git
@@ -23,6 +24,7 @@ brew_casks:
   - iterm2
 
 apt_packages:
+  - fd-find
   - nodejs
   - stow
   - tmux
