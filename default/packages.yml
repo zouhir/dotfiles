@@ -6,17 +6,19 @@ brew_packages:
   - gh
   - git
   - go
+  - lazygit
   - nvim
   - stow
   - volta
   - wget
-  - zsh
   - zoxide
+  - zsh
 
 brew_casks:
   - alacritty
   - alfred
   - bettertouchtool
+  - dash
   - font-jetbrains-mono
   - iterm2
 
