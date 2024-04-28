@@ -20,7 +20,7 @@ brew_casks:
   - alfred
   - bettertouchtool
   - dash
-  - font-jetbrains-mono
+  - font-jetbrains-mono-nerd-font
   - iterm2
 
 apt_packages:
