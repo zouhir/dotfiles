@@ -1,0 +1,20 @@
+export COMPUTER_TYPE={{computer_type}}
+export COMPUTER_KIND={{computer_kind}}
+export WORK_DOTFILES_URL={{work_dotfiles_url}}
+export py_version={{py_version}}
+
+{% if ansible_os_family == "Darwin" %}
+export HOMEBREW_COLOR=1
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_EMOJI=1
+export HOMEBREW_PREFIX=/opt/homebrew
+{% endif %}
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh/"

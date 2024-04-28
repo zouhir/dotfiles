@@ -1,27 +1,4 @@
 ################################################
-# Environment variables.
-################################################
-export COMPUTER_TYPE={{computer_type}}
-export COMPUTER_KIND={{computer_kind}}
-export WORK_DOTFILES_URL={{work_dotfiles_url}}
-export py_version={{py_version}}
-
-{% if ansible_os_family == "Darwin" %}
-export HOMEBREW_COLOR=1
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_ANALYTICS=1
-export HOMEBREW_NO_EMOJI=1
-export HOMEBREW_PREFIX=/opt/homebrew
-{% endif %}
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_STATE_HOME="$HOME/.local/state"
-# Homebrew (if applicable)
-
-
-################################################
 # Completion
 ################################################
 fpath+=("${XDG_CONFIG_HOME}/zsh/completions")
@@ -80,7 +57,6 @@ for dir in $path_dirs; do
     path+=$dir
   fi
 done
-
 typeset -U path
 export PATH
 
@@ -89,18 +65,6 @@ export PATH
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 {% endif %}
-
-#Aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-fi
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 
 # Editor.
 export EDITOR=nvim
@@ -112,5 +76,14 @@ if [[ -d ${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting ]]; then
   source "${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
+source {XDG_CONFIG_HOME}/zsh/aliases.zsh
+
+if [[ -d ~/.config/zsh/functions ]]; then
+  for file in ~/.config/zsh/functions/*.zsh; do
+      source $file
+  done
+fi
+
+eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
