@@ -12,6 +12,7 @@
   shell: |
     mkdir -p -m 755 out/.config/alacritty
     mkdir -p -m 755 out/.config/tmux/
+    mkdir -p -m 755 out/.config/zsh/
     mkdir -p -m 755 out/.ssh
     mkdir -p -m 755 ~/.tmux/plugins/tpm
 
