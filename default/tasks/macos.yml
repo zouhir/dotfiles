@@ -1,0 +1,14 @@
+- name: Create necessary dirs
+  shell: |
+    mkdir -p -m 755 out/.config/alfred
+    mkdir -p -m 755 out/.config/iterm2
+
+- name: Download catppuccin mocha for iterm2
+  get_url:
+    url: https://github.com/catppuccin/iterm/raw/main/colors/catppuccin-mocha.itermcolors
+    dest: out/.config/iterm2/catppuccin-mocha.itermcolors
+
+- name: Download catppuccin mocha for Alfred
+  get_url:
+    url: https://github.com/catppuccin/alfred/blob/main/dist/Catppuccin-macOS-mocha.alfredappearance
+    dest: out/.config/alfred/Catppuccin-macOS-mocha.alfredappearance

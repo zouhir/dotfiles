@@ -52,3 +52,6 @@
       - include_tasks: default/tasks/stow.yml
       tags:
           - dotfiles
+    - block:
+      - include_tasks: default/tasks/macos.yml
+      when: ansible_os_family == "Darwin"
