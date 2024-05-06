@@ -13,7 +13,7 @@ defaults write com.apple.dock "show-recents" -bool "false"
 defaults write com.apple.dock "mineffect" -string "scale"
 
 ###############################################################################
-# Dock                                                                        #
+# Sleep settings                                                              #
 ###############################################################################
 # Disable machine sleep while charging
 sudo pmset -c sleep 0
