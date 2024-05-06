@@ -13,6 +13,18 @@ defaults write com.apple.dock "show-recents" -bool "false"
 defaults write com.apple.dock "mineffect" -string "scale"
 
 ###############################################################################
+# Dock                                                                        #
+###############################################################################
+# Disable machine sleep while charging
+sudo pmset -c sleep 0
+# Sleep the display after 15 minutes
+sudo pmset -a displaysleep 15
+# Set machine sleep to 15 minutes on battery
+sudo pmset -b sleep 15
+# Set standby delay to 24 hours (default is 1 hour)
+sudo pmset -a standbydelay 86400
+
+###############################################################################
 # Safari                                                                      #
 ###############################################################################
 # Show full website address.
@@ -42,11 +54,6 @@ defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true"
 # Desktop                                                                     #
 ###############################################################################
 defaults write com.apple.finder "_FXSortFoldersFirstOnDesktop" -bool "true"
-
-###############################################################################
-# Menu Bar                                                                    #
-###############################################################################
-defaults write NSGlobalDomain _HIHideMenuBar -bool "true"
 
 ###############################################################################
 # Keyboard                                                                    #

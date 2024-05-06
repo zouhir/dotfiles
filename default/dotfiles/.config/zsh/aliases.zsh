@@ -10,6 +10,8 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias please='sudo $(history -p !!)'
+
 {% if computer_type == "work" %}
 {% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/aliases.zsh') %}
 {{ file_contents }}

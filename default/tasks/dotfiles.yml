@@ -12,7 +12,7 @@
   shell: |
     mkdir -p -m 755 out/.config/alacritty
     mkdir -p -m 755 out/.config/tmux/
-    mkdir -p -m 755 out/.config/zsh/
+    mkdir -p -m 755 out/.config/zsh/functions
     mkdir -p -m 755 out/.config/nvim/lua/config
     mkdir -p -m 755 out/.config/nvim/lua/plugins
     mkdir -p -m 755 out/.ssh
@@ -20,15 +20,27 @@
 
 - name: Find all dotfiles in the source directory
   find:
-    paths: "default/dotfiles"
+    paths: 
+      - "default/dotfiles"
     recurse: yes
     hidden: yes
   register: dotfiles_src
+  when: computer_type != "work"
+
+- name: Find all dotfiles in the source directory
+  find:
+    paths: 
+      - "default/dotfiles"
+      - "work/dotfiles/.config/zsh/functions"
+    recurse: yes
+    hidden: yes
+  register: dotfiles_src
+  when: computer_type == "work"
 
 - name: Compile and copy template dotfiles.
   template:
     src: "{{ item.path }}"
-    dest: "out/{{ item.path | regex_replace('^default/dotfiles', '') | regex_replace('\\.j2$', '') }}"
+    dest: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') | regex_replace('\\.j2$', '') }}"
   with_items: "{{ dotfiles_src.files | default([]) }}"
   when: 
     - dotfiles_src.matched > 0
@@ -37,7 +49,7 @@
 - name: Copy non-template dotfiles.
   template:
     src: "{{ item.path }}"
-    dest: "out/{{ item.path | regex_replace('^default/dotfiles', '') }}"
+    dest: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') }}"
   with_items: "{{ dotfiles_src.files | default([]) }}"
   when: 
     - dotfiles_src.matched > 0
