@@ -19,24 +19,51 @@
   loop: "{{ apt_packages }}"
   become: yes
 
-- name: Install ripgrep on Debian
-  become: true  
+- name: Install ripgrep on Debian (if not already installed)
+  become: true
   block:
+    - name: Check if ripgrep is already installed
+      command: dpkg-query -W -f='${Status}' ripgrep
+      register: ripgrep_status
+      failed_when: ripgrep_status.rc != 0 and ripgrep_status.rc != 1
+      changed_when: false
+
     - name: Download ripgrep DEB package
       get_url:
         url: "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
         dest: "/tmp/ripgrep_13.0.0_amd64.deb"
         mode: '0644'
+      when: ripgrep_status.rc == 1
 
     - name: Install ripgrep DEB package
       apt:
         deb: "/tmp/ripgrep_13.0.0_amd64.deb"
+      when: ripgrep_status.rc == 1
 
-    - name: Cleanup ripgrep deb package (optional)
+    - name: Cleanup ripgrep deb package 
       file:
         path: "/tmp/ripgrep_13.0.0_amd64.deb"
         state: absent
+      when: ripgrep_status.rc == 1
 
 - name: Install zoxide on Debian
   shell: | 
     curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+  when: not ansible_env.PATH is search('z')
+
+- name: Download and install fzf script
+  block:
+    - name: Ensure ~/.local/bin directory exists
+      file:
+        path: ~/.local/bin
+        state: directory
+        mode: '0755'
+
+    - name: Clone fzf
+      git:
+        repo: 'https://github.com/junegunn/fzf.git'
+        dest: "{{ansible_env.HOME}}/.local/bin/fzf"
+        depth: 1
+    - name: Install fzf
+      shell: |
+        ~/.local/bin/fzf/install
