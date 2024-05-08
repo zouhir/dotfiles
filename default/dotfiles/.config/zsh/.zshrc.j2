@@ -50,6 +50,9 @@ path_dirs=(
   "$HOME/.local/bin"
   "$HOME/go/bin"
   "$HOME/Library/Python/$py_version/bin"
+  {% if ansible_os_family == "Debian" %}
+  "$HOME/.local/bin/fzf/bin"
+  {% endif %}
 )
 
 for dir in $path_dirs; do
