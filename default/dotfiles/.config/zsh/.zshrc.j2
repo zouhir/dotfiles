@@ -87,6 +87,11 @@ if [[ -d "${ZDOTDIR}/functions" ]]; then
   done
 fi
 
+{% if computer_type == "work" %}
+{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/zshrc.zsh') %}
+{{ file_contents }}
+{% endif %}
+
 eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
