@@ -31,7 +31,7 @@
   find:
     paths: 
       - "default/dotfiles"
-      - "work/dotfiles/.config/zsh/functions"
+      - "work/dotfiles"
     recurse: yes
     hidden: yes
   register: dotfiles_src
@@ -45,6 +45,7 @@
   when: 
     - dotfiles_src.matched > 0
     - item.path is match(".*j2$")
+    - not item.path.split("/")[-2] == "partials" 
 
 - name: Copy non-template dotfiles.
   template:
@@ -54,6 +55,7 @@
   when: 
     - dotfiles_src.matched > 0
     - item.path is not match(".*j2$")
+    - not item.path.split("/")[-2] == "partials" 
 
 - name: Download catppuccin-mocha.toml for Alacritty
   get_url:

@@ -13,6 +13,6 @@ alias egrep='egrep --color=auto'
 alias please='sudo $(history -p !!)'
 
 {% if computer_type == "work" %}
-{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/aliases.zsh') %}
+{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/partials/aliases.zsh') %}
 {{ file_contents }}
 {% endif %}
