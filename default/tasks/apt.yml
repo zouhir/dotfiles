@@ -38,8 +38,5 @@
         state: absent
 
 - name: Install zoxide on Debian
-  become: true
   shell: | 
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh -s -- -y
-  args:
-    warn: false
+    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh

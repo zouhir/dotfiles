@@ -8,7 +8,7 @@ brew_packages:
   - git
   - go
   - lazygit
-  - nvim
+  - neovim
   - stow
   - volta
   - wget
@@ -29,3 +29,4 @@ apt_packages:
   - stow
   - tmux
   - zsh
+  - neovim
