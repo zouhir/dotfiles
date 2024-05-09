@@ -30,3 +30,4 @@ apt_packages:
   - tmux
   - zsh
   - neovim
+  - npm
