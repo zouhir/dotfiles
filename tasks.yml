@@ -36,7 +36,10 @@
       vars:
         computer_type: "{{computer_type}}"
       when: ansible_os_family == "Debian"
-    - include_tasks: default/tasks/shell.yml
+    - block:
+      - include_tasks: default/tasks/shell.yml
+      tags:
+        - dotfiles
     - include_tasks: default/tasks/node.yml
       when: ansible_os_family == "Darwin"
     - block:

@@ -11,14 +11,13 @@
     dest: /tmp/install_starship.sh
     mode: '0755'
 
-- name: Install Starship
-  block: 
-    - name: Ensure ~/.local/bin directory exists
-      file:
-        path: ~/.local/bin
-        state: directory
-        mode: '0755'
-    - shell: /tmp/install_starship.sh -y --bin-dir ~/.local/bin
+- name: Clone zsh powerlevel10k
+  git:
+    repo: 'https://github.com/romkatv/powerlevel10k.git'
+    dest: "{{ansible_env.HOME}}/.config/zsh/powerlevel10k"
+    version: master
+    depth: 1
+  become_user: "{{ ansible_user_id }}"
 
 - name: Clone zsh-autosuggestions
   git:

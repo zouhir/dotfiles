@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh//.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 ################################################
 # Completion
 ################################################
@@ -75,11 +82,10 @@ export EDITOR=nvim
 # Options
 unsetopt BEEP
 
-if [[ -d ${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting ]]; then
-  source "${XDG_CONFIG_HOME}/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
 
-source "${ZDOTDIR}/aliases.zsh"
+[[ ! -f "${ZDOTDIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] || source "${ZDOTDIR}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ ! -f "${ZDOTDIR}/powerlevel10k/powerlevel10k.zsh-theme" ]] || source "${ZDOTDIR}/powerlevel10k/powerlevel10k.zsh-theme"
+[[ ! -f "${ZDOTDIR}/aliases" ]] || source "${ZDOTDIR}/aliases"
 
 if [[ -d "${ZDOTDIR}/functions" ]]; then
   for file in "${ZDOTDIR}/functions"/*.zsh; do
@@ -93,5 +99,5 @@ fi
 {% endif %}
 
 eval "$(fzf --zsh)"
-eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+[[ ! -f "${XDG_CONFIG_HOME}/zsh/.p10k.zsh" ]] || source "${XDG_CONFIG_HOME}/zsh/.p10k.zsh"

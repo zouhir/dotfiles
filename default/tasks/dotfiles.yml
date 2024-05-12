@@ -48,7 +48,7 @@
     - not item.path.split("/")[-2] == "partials" 
 
 - name: Copy non-template dotfiles.
-  template:
+  copy:
     src: "{{ item.path }}"
     dest: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') }}"
   with_items: "{{ dotfiles_src.files | default([]) }}"
