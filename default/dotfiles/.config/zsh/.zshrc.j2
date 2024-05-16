@@ -1,3 +1,8 @@
+{% if computer_type == "work" and computer_kind == "server" %}
+{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/partials/bootup.zsh') %}
+{{ file_contents }}
+{% endif %}
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh//.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -94,7 +99,7 @@ if [[ -d "${ZDOTDIR}/functions" ]]; then
 fi
 
 {% if computer_type == "work" %}
-{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/partials/zshrc.zsh') %}
+{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/zsh/partials/completions.zsh') %}
 {{ file_contents }}
 {% endif %}
 
