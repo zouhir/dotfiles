@@ -10,6 +10,7 @@
 # TODO(zouhir): Maybe ansible should be able to create dest directory if it did not exist (e.g. force: yes).
 - name: Create necessary dirs
   shell: |
+    mkdir -p -m 755 out/.local/bin
     mkdir -p -m 755 out/.config/alacritty
     mkdir -p -m 755 out/.config/tmux/
     mkdir -p -m 755 out/.config/zsh/functions
