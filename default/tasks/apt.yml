@@ -9,9 +9,8 @@
     name: extra_packages
 
 - name: Custom work packages
-  tasks:
-    - include_tasks:  "work/tasks/apt.yml"
-      when: computer_type == "work"
+  include_tasks: work/tasks/apt.yml
+  when: computer_type == "work"
 
 - name: Compose apt packages
   set_fact:
