@@ -70,4 +70,4 @@
         depth: 1
     - name: Install fzf
       shell: |
-        ~/.local/bin/fzf/install
+        ~/.local/bin/fzf/install --xdg --no-bash --no-zsh
