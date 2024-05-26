@@ -10,14 +10,15 @@
 # TODO(zouhir): Maybe ansible should be able to create dest directory if it did not exist (e.g. force: yes).
 - name: Create necessary dirs
   shell: |
-    mkdir -p -m 755 out/.local/bin
+    mkdir -p -m 755 ~/.tmux/plugins/tpm
     mkdir -p -m 755 out/.config/alacritty
-    mkdir -p -m 755 out/.config/tmux/
-    mkdir -p -m 755 out/.config/zsh/functions
+    mkdir -p -m 755 out/.config/fish/functions
     mkdir -p -m 755 out/.config/nvim/lua/config
     mkdir -p -m 755 out/.config/nvim/lua/plugins
+    mkdir -p -m 755 out/.config/tmux
+    mkdir -p -m 755 out/.config/zsh/functions
+    mkdir -p -m 755 out/.local/bin
     mkdir -p -m 755 out/.ssh
-    mkdir -p -m 755 ~/.tmux/plugins/tpm
 
 - name: Find all dotfiles in the source directory
   find:
