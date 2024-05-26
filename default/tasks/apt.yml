@@ -8,6 +8,11 @@
     file: "{{ computer_type }}/packages.yml"
     name: extra_packages
 
+- name: Custom work packages
+  tasks:
+    - include_tasks:  "work/tasks/apt.yml"
+      when: computer_type == "work"
+
 - name: Compose apt packages
   set_fact:
     apt_packages: "{{ default_packages.apt_packages + extra_packages.apt_packages }}"
@@ -67,3 +72,13 @@
     - name: Install fzf
       shell: |
         ~/.local/bin/fzf/install
+
+- name: Install Fish Shell
+  become: yes  # Use sudo for the commands
+  apt:
+    name: fish
+    update_cache: yes  # Refresh the package list before installation
+    state: present  # Ensure Fish is installed (or do nothing if it already is)
+  apt_repository:  # Add the Fish PPA
+    repo: ppa:fish-shell/release-3
+    state: present

@@ -1,0 +1,48 @@
+set -U fish_greeting
+
+set -x COMPUTER_TYPE {{computer_type}}
+set -x COMPUTER_KIND {{computer_kind}}
+set -x WORK_DOTFILES_URL {{work_dotfiles_url}}
+set -x py_version {{py_version}}
+
+set -x LANG en_US.UTF-8 
+set -x LC_COLLATE C.UTF-8
+set -x LC_CTYPE en_US.UTF-8
+set -x LC_ALL en_US.UTF-8
+{% if ansible_os_family == "Darwin" %}
+set -x HOMEBREW_COLOR 1
+set -x HOMEBREW_NO_AUTO_UPDATE 1
+set -x HOMEBREW_NO_ANALYTICS 1
+set -x HOMEBREW_NO_EMOJI 1
+set -x HOMEBREW_PREFIX /opt/homebrew
+{% endif %}
+set -x XDG_CONFIG_HOME "$HOME/.config"
+set -x XDG_DATA_HOME "$HOME/.local/share"
+set -x XDG_CACHE_HOME "$HOME/.cache"
+set -x XDG_STATE_HOME "$HOME/.local/state"
+
+
+{% if computer_type == "work" and computer_kind == "server" %}
+{% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.config/fish/partials/bootup.fish') %}
+{{ file_contents }}
+{% endif %}
+
+set -x EDITOR nvim
+
+fish_add_path "/bin"
+fish_add_path "/sbin"
+fish_add_path "/usr/bin"
+fish_add_path "/usr/sbin"
+fish_add_path "/usr/local/bin"
+fish_add_path "/opt/homebrew/bin"
+fish_add_path "/opt/homebrew/sbin"
+fish_add_path "$HOME/bin"
+fish_add_path "$HOME/.local/bin"
+fish_add_path "$HOME/go/bin"
+fish_add_path "$HOME/Library/Python/$py_version/bin"
+{% if ansible_os_family == "Debian" %}
+fish_add_path "$HOME/.local/bin/fzf/bin"
+{% endif %}
+
+fzf --fish | source
+zoxide init fish | source

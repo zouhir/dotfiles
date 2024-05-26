@@ -3,6 +3,7 @@ brew_taps:
 
 brew_packages:
   - fd
+  - fish
   - fzf
   - gh
   - git
@@ -25,9 +26,10 @@ brew_casks:
 
 apt_packages:
   - fd-find
+  - fish
+  - neovim
   - nodejs
+  - npm
   - stow
   - tmux
   - zsh
-  - neovim
-  - npm
