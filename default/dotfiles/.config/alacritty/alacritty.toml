@@ -22,4 +22,4 @@ normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular"  }
 bold = { style = "Bold" }
 italic = { style = "Italic" }
 bold_italic = { style = "Bold Italic" }  # Inherits family from normal, Default style: Bold Italic
-size = 12.0
+size = 14.0
