@@ -12,9 +12,9 @@ program = "/opt/homebrew/bin/fish"
 args = ["-l"]
 
 [window]
-padding = { x = 8, y = 28}  
-dynamic_padding = false   
-decorations = "transparent" 
+padding = { x = 8, y = 0}
+dynamic_padding = true 
+decorations = "buttonless"
 opacity = 1.0 
 
 [font]
