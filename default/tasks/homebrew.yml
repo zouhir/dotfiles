@@ -10,16 +10,9 @@
 
 - name: Compose homebrew packages & casks
   set_fact:
-    homebrew_taps: "{{ default_packages.brew_taps + extra_packages.brew_taps }}"
     homebrew_packages: "{{ default_packages.brew_packages + extra_packages.brew_packages }}"
     homebrew_casks: "{{ default_packages.brew_casks + extra_packages.brew_casks }}"
     
-- name: Install Homebrew taps
-  community.general.homebrew_tap:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ homebrew_taps }}"
-
 - name: Install Homebrew packages
   community.general.homebrew:
     name: "{{ item }}"

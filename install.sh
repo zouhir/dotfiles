@@ -110,11 +110,11 @@ if [ -z "${COMPUTER_KIND}" ]; then
     ask_computer_kind
 fi
 
-if [ -z "${WORK_DOTFILES_URL}" ]; then
+if [ -z "${WORK_DOTFILES_URL}" ] && [ "${COMPUTER_TYPE}" == "work" ]; then
     read -p "Enter the URL for work dotfiles repo: " WORK_DOTFILES_URL
     export WORK_DOTFILES_URL
 fi
 
 ansible-galaxy collection install community.general
 
-# ansible-playbook tasks.yml --ask-become-pass -e "computer_type=${COMPUTER_TYPE}" -e "computer_kind=${COMPUTER_KIND}" -e "work_dotfiles_url=${WORK_DOTFILES_URL}" -e "py_version=${py_version}" -t "dotfiles"
+ansible-playbook tasks.yml --ask-become-pass -e "computer_type=${COMPUTER_TYPE}" -e "computer_kind=${COMPUTER_KIND}" -e "work_dotfiles_url=${WORK_DOTFILES_URL}" -e "py_version=${py_version}" 

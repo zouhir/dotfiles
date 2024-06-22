@@ -42,7 +42,7 @@ fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/Library/Python/$py_version/bin"
 {% if ansible_os_family == "Darwin" %}
-$fish_add_path "$VOLTA_HOME/bin"
+fish_add_path "$VOLTA_HOME/bin"
 {% endif %}
 {% if ansible_os_family == "Debian" %}
 fish_add_path "$HOME/.local/bin/fzf/bin"

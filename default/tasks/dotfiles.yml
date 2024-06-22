@@ -26,8 +26,18 @@
       - "default/dotfiles"
     recurse: yes
     hidden: yes
-  register: dotfiles_src
+  register: dotfiles_src_personal_temp
   when: computer_type != "work"
+
+- name: Debug list of files for non-work computers
+  debug:
+    var: dotfiles_src_personal_temp
+  when: computer_type != "work"
+
+- name: Set dotfiles_src for non-work computers
+  set_fact:
+    dotfiles_src: "{{ dotfiles_src_personal_temp }}"
+  when: computer_type != "work" and dotfiles_src_personal_temp is defined
 
 - name: Find all dotfiles in the source directory
   find:
@@ -36,8 +46,13 @@
       - "work/dotfiles"
     recurse: yes
     hidden: yes
-  register: dotfiles_src
+  register: dotfiles_src_work_temp
   when: computer_type == "work"
+
+- name: Set dotfiles_src for work computers
+  set_fact:
+    dotfiles_src: "{{ dotfiles_src_work_temp }}"
+  when: computer_type == "work" and dotfiles_src_work_temp is defined
 
 - name: Compile and copy template dotfiles.
   template:
