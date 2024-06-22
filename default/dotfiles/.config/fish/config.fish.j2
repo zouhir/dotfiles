@@ -15,6 +15,7 @@ set -x HOMEBREW_NO_AUTO_UPDATE 1
 set -x HOMEBREW_NO_ANALYTICS 1
 set -x HOMEBREW_NO_EMOJI 1
 set -x HOMEBREW_PREFIX /opt/homebrew
+set -x VOLTA_HOME $HOME/.volta
 {% endif %}
 set -x XDG_CONFIG_HOME "$HOME/.config"
 set -x XDG_DATA_HOME "$HOME/.local/share"
@@ -40,6 +41,9 @@ fish_add_path "$HOME/bin"
 fish_add_path "$HOME/.local/bin"
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/Library/Python/$py_version/bin"
+{% if ansible_os_family == "Darwin" %}
+$fish_add_path "$VOLTA_HOME/bin"
+{% endif %}
 {% if ansible_os_family == "Debian" %}
 fish_add_path "$HOME/.local/bin/fzf/bin"
 {% endif %}
