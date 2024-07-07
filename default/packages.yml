@@ -17,12 +17,11 @@ brew_packages:
   - zsh
 
 brew_casks:
-  - alacritty
   - alfred
   - bettertouchtool
   - dash
   - font-jetbrains-mono-nerd-font
-  - iterm2
+  - kitty
 
 apt_packages:
   - fd-find
