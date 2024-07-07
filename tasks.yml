@@ -24,6 +24,7 @@
       become: yes
       when: ansible_os_family == "Debian"
       tags: ["system_update"]
+
     - block:
         - include_tasks: default/tasks/init_submodules.yml
           vars:
@@ -31,18 +32,22 @@
             work_dotfiles_url: "{{work_dotfiles_url}}"
       tags:
         - dotfiles
+
     - include_tasks: default/tasks/homebrew.yml
       vars:
         computer_type: "{{computer_type}}"
       when: ansible_os_family == "Darwin"
+
     - include_tasks: default/tasks/apt.yml
       vars:
         computer_type: "{{computer_type}}"
       when: ansible_os_family == "Debian"
+
     - block:
         - include_tasks: default/tasks/shell.yml
     - include_tasks: default/tasks/node.yml
       when: ansible_os_family == "Darwin"
+
     - block:
         - include_tasks: default/tasks/dotfiles.yml
           vars:
@@ -52,10 +57,12 @@
             py_version: "{{py_version}}"
       tags:
         - dotfiles
+
     - block:
         - include_tasks: default/tasks/stow.yml
       tags:
         - dotfiles
+
     - block:
         - include_tasks: default/tasks/macos.yml
       when: ansible_os_family == "Darwin"
