@@ -12,6 +12,7 @@
   shell: |
     mkdir -p -m 755 ~/.tmux/plugins/tpm
     mkdir -p -m 755 out/.config/alacritty
+    mkdir -p -m 755 out/.config/kitty
     mkdir -p -m 755 out/.config/fish/functions
     mkdir -p -m 755 out/.config/nvim/lua/config
     mkdir -p -m 755 out/.config/nvim/lua/plugins
