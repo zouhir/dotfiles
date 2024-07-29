@@ -9,6 +9,7 @@ brew_packages:
   - git
   - go
   - lazygit
+  - luarocks
   - neovim
   - stow
   - volta
@@ -24,6 +25,9 @@ brew_casks:
   - kitty
 
 apt_packages:
+  - build-essential
+  - libreadline-dev
+  - unzip
   - fd-find
   - fish
   - neovim
