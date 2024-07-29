@@ -11,6 +11,7 @@ brew_packages:
   - lazygit
   - luarocks
   - neovim
+  - ripgrep
   - stow
   - volta
   - wget
@@ -26,13 +27,14 @@ brew_casks:
 
 apt_packages:
   - build-essential
-  - libreadline-dev
-  - unzip
   - fd-find
   - fish
+  - libreadline-dev
   - neovim
   - nodejs
   - npm
+  - ripgrep
   - stow
   - tmux
+  - unzip
   - zsh
