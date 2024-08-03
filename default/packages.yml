@@ -34,6 +34,7 @@ apt_packages:
   - neovim
   - nodejs
   - npm
+  - python3-pynvim
   - ripgrep
   - stow
   - tmux
