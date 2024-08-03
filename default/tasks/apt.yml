@@ -2,7 +2,7 @@
   include_vars:
     file: default/packages.yml
     name: default_packages
-  
+
 - name: Include computer-specific apt packages
   include_vars:
     file: "{{ computer_type }}/packages.yml"
@@ -15,7 +15,7 @@
 - name: Compose apt packages
   set_fact:
     apt_packages: "{{ default_packages.apt_packages + extra_packages.apt_packages }}"
-    
+
 - name: Install apt packages
   apt:
     name: "{{ item }}"
@@ -44,14 +44,14 @@
         deb: "/tmp/ripgrep_13.0.0_amd64.deb"
       when: ripgrep_status.rc == 1
 
-    - name: Cleanup ripgrep deb package 
+    - name: Cleanup ripgrep deb package
       file:
         path: "/tmp/ripgrep_13.0.0_amd64.deb"
         state: absent
       when: ripgrep_status.rc == 1
 
 - name: Install zoxide on Debian
-  shell: | 
+  shell: |
     curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
   when: not ansible_env.PATH is search('z')
 
@@ -71,3 +71,13 @@
     - name: Install fzf
       shell: |
         ~/.local/bin/fzf/install --xdg --no-bash --no-zsh
+- name: Install GitHub CLI (using shell script)
+  shell:
+    cmd: |
+      (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
+      && sudo mkdir -p -m 755 /etc/apt/keyrings \
+      && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+      && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+      && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+      && sudo apt update \
+      && sudo apt install gh -y

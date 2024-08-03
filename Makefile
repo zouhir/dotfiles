@@ -8,10 +8,10 @@ all:
 	@echo "Running install script..."
 	./install.sh
 	@echo "Running Ansible playbook for dotfiles..."
-	$(BASE_CMD) --ask-become-pass --tags "all" 
+	$(BASE_CMD) --ask-become-pass --tags "all"
 
 dotfiles:
 	@echo "Running install script..."
 	./install.sh
 	@echo "Running Ansible playbook for dotfiles..."
-	$(BASE_CMD) --tags "dotfiles" 
+	$(BASE_CMD) --tags "dotfiles"
