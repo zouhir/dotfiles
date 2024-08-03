@@ -29,6 +29,7 @@ apt_packages:
   - build-essential
   - fd-find
   - fish
+	- kitty-terminfo
   - libreadline-dev
   - neovim
   - nodejs
