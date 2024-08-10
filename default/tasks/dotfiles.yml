@@ -14,8 +14,8 @@
     mkdir -p -m 755 out/.config/alacritty
     mkdir -p -m 755 out/.config/kitty
     mkdir -p -m 755 out/.config/fish/functions
-    mkdir -p -m 755 out/.config/nvim/lua/config
-    mkdir -p -m 755 out/.config/nvim/lua/plugins
+    mkdir -p -m 755 out/.config/nvim/lua/zouhir/core
+    mkdir -p -m 755 out/.config/nvim/lua/zouhir/options
     mkdir -p -m 755 out/.config/tmux
     mkdir -p -m 755 out/.config/zsh/functions
     mkdir -p -m 755 out/.local/bin
@@ -23,7 +23,7 @@
 
 - name: Find all dotfiles in the source directory
   find:
-    paths: 
+    paths:
       - "default/dotfiles"
     recurse: yes
     hidden: yes
@@ -42,7 +42,7 @@
 
 - name: Find all dotfiles in the source directory
   find:
-    paths: 
+    paths:
       - "default/dotfiles"
       - "work/dotfiles"
     recurse: yes
@@ -60,20 +60,20 @@
     src: "{{ item.path }}"
     dest: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') | regex_replace('\\.j2$', '') }}"
   with_items: "{{ dotfiles_src.files | default([]) }}"
-  when: 
+  when:
     - dotfiles_src.matched > 0
     - item.path is match(".*j2$")
-    - not item.path.split("/")[-2] == "partials" 
+    - not item.path.split("/")[-2] == "partials"
 
 - name: Copy non-template dotfiles.
   copy:
     src: "{{ item.path }}"
     dest: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') }}"
   with_items: "{{ dotfiles_src.files | default([]) }}"
-  when: 
+  when:
     - dotfiles_src.matched > 0
     - item.path is not match(".*j2$")
-    - not item.path.split("/")[-2] == "partials" 
+    - not item.path.split("/")[-2] == "partials"
 
 - name: Download catppuccin-mocha.toml for Alacritty
   get_url:
