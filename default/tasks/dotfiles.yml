@@ -15,6 +15,7 @@
     mkdir -p -m 755 out/.config/kitty
     mkdir -p -m 755 out/.config/fish/functions
     mkdir -p -m 755 out/.config/nvim/lua/zouhir/core
+    mkdir -p -m 755 out/.config/nvim/lua/zouhir/config
     mkdir -p -m 755 out/.config/nvim/lua/zouhir/plugins/lsp
     mkdir -p -m 755 out/.config/tmux
     mkdir -p -m 755 out/.config/zsh/functions
