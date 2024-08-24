@@ -60,6 +60,8 @@ defaults write com.apple.finder "_FXSortFoldersFirstOnDesktop" -bool "true"
 ###############################################################################
 # Repeats the key as long as it is held down.
 defaults write NSGlobalDomain "ApplePressAndHoldEnabled" -bool "false"
+defaults write -g NSAutomaticCapitalizationEnabled -bool false
+defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
 
 ###############################################################################
 # Mouse & Trackpad                                                            #
