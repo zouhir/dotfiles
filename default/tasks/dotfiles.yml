@@ -7,21 +7,6 @@
     rm -rf out
     rm -rf ~/.tmux/plugins/tpm
 
-# TODO(zouhir): Maybe ansible should be able to create dest directory if it did not exist (e.g. force: yes).
-- name: Create necessary dirs
-  shell: |
-    mkdir -p -m 755 ~/.tmux/plugins/tpm
-    mkdir -p -m 755 out/.config/alacritty
-    mkdir -p -m 755 out/.config/kitty
-    mkdir -p -m 755 out/.config/fish/functions
-    mkdir -p -m 755 out/.config/nvim/lua/zouhir/core
-    mkdir -p -m 755 out/.config/nvim/lua/zouhir/config
-    mkdir -p -m 755 out/.config/nvim/lua/zouhir/plugins/lsp
-    mkdir -p -m 755 out/.config/tmux
-    mkdir -p -m 755 out/.config/zsh/functions
-    mkdir -p -m 755 out/.local/bin
-    mkdir -p -m 755 out/.ssh
-
 - name: Find all dotfiles in the source directory
   find:
     paths:
@@ -55,6 +40,15 @@
   set_fact:
     dotfiles_src: "{{ dotfiles_src_work_temp }}"
   when: computer_type == "work" and dotfiles_src_work_temp is defined
+
+- name: Ensure directories exist
+  file:
+    path: "out/{{ item.path | regex_replace('^(default|work|personal)/dotfiles', '') | dirname }}"
+    state: directory
+    mode: '0755'
+  with_items: "{{ dotfiles_src.files | default([]) }}"
+  when:
+    - dotfiles_src.matched > 0
 
 - name: Compile and copy template dotfiles.
   template:
