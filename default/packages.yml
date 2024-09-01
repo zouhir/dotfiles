@@ -2,6 +2,7 @@ brew_taps:
   - homebrew/cask-fonts
 
 brew_packages:
+  - bat
   - fd
   - fish
   - fzf
@@ -26,6 +27,7 @@ brew_casks:
   - kitty
 
 apt_packages:
+  - bat
   - build-essential
   - fd-find
   - fish
