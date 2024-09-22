@@ -7,6 +7,7 @@
     whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
     excludesfile = ~/.gitignore_global
     pager = delta
+    sshCommand = ssh -i ~/.ssh/id_ed25519
 
 [color]
     ui = auto
@@ -55,3 +56,12 @@
 
 [interactive]
     diffFilter = delta --color-only
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+
+[url "git@gitlab.com:"]
+    insteadOf = https://gitlab.com/
+
+[url "git@bitbucket.org:"]
+    insteadOf = https://bitbucket.org/
