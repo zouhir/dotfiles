@@ -19,3 +19,14 @@ Match all
 {% set file_contents = lookup('file', playbook_dir + '/work/dotfiles/.ssh/partials/hosts') %}
 {{ file_contents }}
 {% endif %}
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github
+    IdentitiesOnly yes
+    AddKeysToAgent yes
+    PreferredAuthentications publickey
+    Compression yes
+    TCPKeepAlive yes
+    ServerAliveInterval 60

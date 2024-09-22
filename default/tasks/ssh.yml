@@ -1,0 +1,79 @@
+- name: Check if GitHub SSH key exists
+  stat:
+    path: "{{ ansible_env.HOME }}/.ssh/id_ed25519_github"
+  register: github_ssh_key
+  become: false
+
+- name: Set up GitHub SSH key (if not exists)
+  block:
+    - name: Ensure .ssh directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/.ssh"
+        state: directory
+        mode: '0700'
+      become: false
+
+    - name: Generate SSH key for GitHub
+      openssh_keypair:
+        path: "{{ ansible_env.HOME }}/.ssh/id_ed25519_github"
+        type: ed25519
+        comment: "{{ ansible_env.USER }}@{{ ansible_hostname }} for GitHub"
+      become: false
+
+    - name: Ensure known_hosts file exists
+      file:
+        path: "{{ ansible_env.HOME }}/.ssh/known_hosts"
+        state: touch
+        mode: '0644'
+      become: false
+
+    - name: Add GitHub's SSH host key to known_hosts
+      known_hosts:
+        name: github.com
+        key: "{{ lookup('pipe', 'ssh-keyscan -H github.com') }}"
+        state: present
+      become: false
+
+    - name: Create/update SSH config for GitHub
+      blockinfile:
+        path: "{{ ansible_env.HOME }}/.ssh/config"
+        create: yes
+        mode: '0600'
+        block: |
+          Host github.com
+            IdentityFile ~/.ssh/id_ed25519_github
+            User git
+      become: false
+
+    - name: Ensure ssh-agent is running
+      shell: |
+        if [ -z "$SSH_AUTH_SOCK" ]; then
+          eval $(ssh-agent -s)
+          echo $SSH_AUTH_SOCK
+        else
+          echo $SSH_AUTH_SOCK
+        fi
+      register: ssh_agent_socket
+      changed_when: false
+      become: false
+
+    - name: Add SSH key to ssh-agent
+      shell: ssh-add {{ ansible_env.HOME }}/.ssh/id_ed25519_github
+      environment:
+        SSH_AUTH_SOCK: "{{ ssh_agent_socket.stdout }}"
+      changed_when: false
+      become: false
+
+    - name: Display public key
+      command: cat {{ ansible_env.HOME }}/.ssh/id_ed25519_github.pub
+      register: public_key_content
+      changed_when: false
+      become: false
+
+    - name: Show public key to user
+      debug:
+        msg: |
+          New SSH public key generated. Please add this key to your GitHub account:
+          {{ public_key_content.stdout }}
+
+  when: not github_ssh_key.stat.exists

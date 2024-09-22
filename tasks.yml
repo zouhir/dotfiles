@@ -26,6 +26,11 @@
       tags: ["system_update"]
 
     - block:
+        - include_tasks: default/tasks/ssh.yml
+      tags:
+        - dotfiles
+
+    - block:
         - include_tasks: default/tasks/init_submodules.yml
           vars:
             computer_type: "{{computer_type}}"

@@ -1,9 +1,20 @@
-- name: Symlink dotfiles to home
+- name: Symlink dotfiles to home (excluding .ssh)
   vars:
     home_dir: "{{ ansible_env.HOME }}"
     dotfiles_dir: "{{ playbook_dir }}"
   shell: |
-    cd {{ dotfiles_dir }} && stow -v -t {{ home_dir }} -R out
+    cd {{ dotfiles_dir }} && stow -v -t {{ home_dir }} -R --ignore='.ssh' out
   args:
     executable: /bin/bash
-  become: no
+  become: false
+
+- name: Remove existing .ssh/config
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh/config"
+    state: absent
+
+- name: Copy new .ssh/config
+  copy:
+    src: "{{ playbook_dir }}/out/.genssh/config"
+    dest: "{{ ansible_env.HOME }}/.ssh/config"
+    mode: '0600'
