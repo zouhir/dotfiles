@@ -3,6 +3,7 @@ brew_taps:
 
 brew_packages:
   - bat
+  - deno
   - fd
   - fish
   - fzf
