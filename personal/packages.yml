@@ -4,7 +4,9 @@ brew_packages:
   - tmux
 
 brew_casks:
+  - goland
   - google-chrome
   - docker
+  - webstorm
 
 apt_packages: []

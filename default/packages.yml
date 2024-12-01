@@ -15,6 +15,7 @@ brew_packages:
   - neovim
   - ripgrep
   - stow
+  - tree
   - volta
   - wget
   - zoxide
