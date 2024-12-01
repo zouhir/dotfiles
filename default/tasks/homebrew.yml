@@ -2,7 +2,7 @@
   include_vars:
     file: default/packages.yml
     name: default_packages
-  
+
 - name: Include computer-specific homebrew packages & casks
   include_vars:
     file: "{{ computer_type }}/packages.yml"
