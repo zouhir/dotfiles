@@ -6,6 +6,7 @@ brew_packages:
 brew_casks:
   - goland
   - google-chrome
+  - google-cloud-sdk
   - docker
   - webstorm
 
