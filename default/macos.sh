@@ -71,6 +71,7 @@ defaults write com.apple.finder "_FXSortFoldersFirstOnDesktop" -bool "true"
 defaults write NSGlobalDomain "ApplePressAndHoldEnabled" -bool "false"
 defaults write -g NSAutomaticCapitalizationEnabled -bool false
 defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 
 ###############################################################################
 # Mouse & Trackpad                                                            #
