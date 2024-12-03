@@ -32,25 +32,37 @@ if [[ $OSTYPE == "darwin"* ]]; then
         exit 1
     fi
 
-    # Install Ansible if not installed.
-    if ansible --version >/dev/null 2>&1; then
-        echo "Ansible is installed."
+    # Check if Ansible is installed
+    if command -v ansible >/dev/null 2>&1; then
+        echo "Ansible is already installed at $(which ansible)."
     else
-        echo "Installing Ansible."
-        python3 -m pip install ansible
-    fi
+        echo "Ansible is not installed. Installing with pip3..."
 
-    # Ensure pip binaies install location is in path.
-    # Get python version.
-    py_version=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-    pip_path="$HOME/Library/Python/$py_version/bin"
+        # Ensure pip3 is available
+        if python3 -m pip -V >/dev/null 2>&1; then
+            echo "pip3 is installed."
+        else
+            echo "pip3 is not installed. Installing pip3..."
+            python3 -m ensurepip --upgrade || { echo "Failed to install pip3."; exit 1; }
+            python3 -m pip install --upgrade pip
+        fi
 
-    if [ -d "$pip_path" ]; then
-        echo "PIP_PATH exists: $pip_path"
-        export PATH="$pip_path:$PATH"
-    else
-        echo "PIP_PATH does not exist: $pip_path"
-        exit 1
+        # Install Ansible using pip3
+        python3 -m pip install --user ansible || { echo "Failed to install Ansible."; exit 1; }
+
+        # Ensure the pip3 binaries path is in PATH
+        pip_path=$(python3 -m site --user-base)/bin
+        if [ -d "$pip_path" ]; then
+            if ! echo "$PATH" | grep -q "$pip_path"; then
+                echo "Adding $pip_path to PATH."
+                export PATH="$pip_path:$PATH"
+            fi
+        else
+            echo "Error: pip3 binaries path not found at $pip_path."
+            exit 1
+        fi
+
+        echo "Ansible installation completed."
     fi
 
     if [ -d "/opt/homebrew" ]; then
