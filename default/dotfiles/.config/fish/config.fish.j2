@@ -50,3 +50,7 @@ fish_add_path "$HOME/.local/bin/fzf/bin"
 
 fzf --fish | source
 zoxide init fish | source
+
+if test -f /opt/homebrew/opt/asdf/libexec/asdf.fish
+    source /opt/homebrew/opt/asdf/libexec/asdf.fish
+end

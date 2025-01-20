@@ -2,6 +2,7 @@ brew_taps:
   - homebrew/cask-fonts
 
 brew_packages:
+  - asdf
   - bat
   - deno
   - fd
