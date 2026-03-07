@@ -1,0 +1,68 @@
+[user]
+    name = zouhir
+    email = zouhir@zouhir.org
+
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = tokyonight_night
+    # TokyoNight Night diff colors
+    minus-style = syntax "#4a272f"
+    minus-emph-style = syntax "#f7768e"
+    plus-style = syntax "#243e4a"
+    plus-emph-style = syntax "#9ece6a"
+    hunk-header-style = syntax bold
+    file-style = "#7aa2f7" bold
+    file-decoration-style = "#7aa2f7" ul
+    line-numbers-minus-style = "#f7768e"
+    line-numbers-plus-style = "#9ece6a"
+
+[merge]
+    conflictstyle = zdiff3
+
+[diff]
+    colorMoved = default
+
+[color]
+    ui = auto
+
+[alias]
+    st = status
+    ci = commit
+    co = checkout
+    br = branch
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    # Quick diff aliases
+    d = diff
+    ds = diff --staged
+    dw = diff --word-diff
+
+[column]
+    ui = auto
+
+[fetch]
+    prune = true
+
+[rerere]
+    enabled = true
+
+[push]
+    default = simple
+
+[pull]
+    rebase = true
+
+[init]
+    defaultBranch = main
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/

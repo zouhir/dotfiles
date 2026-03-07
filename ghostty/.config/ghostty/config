@@ -1,0 +1,31 @@
+# Ghostty terminal configuration
+# https://ghostty.org/docs/config
+
+# Theme - TokyoNight Night (built-in)
+theme = TokyoNight Night
+
+# Font
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+
+# Window
+window-padding-x = 12
+window-padding-y = 8
+window-decoration = true
+macos-titlebar-style = hidden
+
+# Cursor
+cursor-style = bar
+cursor-style-blink = false
+
+# Shell
+shell-integration = fish
+
+# Clipboard
+copy-on-select = true
+
+# Scrollback
+scrollback-limit = 10000
+
+# Quick terminal (macOS)
+macos-option-as-alt = true
