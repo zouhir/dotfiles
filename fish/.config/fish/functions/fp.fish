@@ -1,11 +1,6 @@
-function fp --description "Fuzzy pick a project and open it in a Zellij session"
-    if set -q ZELLIJ
-        echo "Already inside Zellij. Detach first (Ctrl+o d) or use a bare terminal."
-        return 1
-    end
-
+function fp --description "Fuzzy pick a project and open it in a tmux session"
     set -l projects_dir "$HOME/Projects"
-    set -l recents_file "$HOME/.local/share/zellij-recent-projects"
+    set -l recents_file "$HOME/.local/share/tmux-recent-projects"
 
     # Ensure recents file exists
     mkdir -p (dirname $recents_file)
@@ -35,7 +30,15 @@ function fp --description "Fuzzy pick a project and open it in a Zellij session"
     head -n 50 $tmp >$recents_file
     rm -f $tmp
 
-    # Attach to existing session or create a new one in the project dir
-    cd $project_path
-    zellij attach --create $project
+    # Create session if it doesn't exist
+    if not tmux has-session -t=$project 2>/dev/null
+        tmux new-session -d -s $project -c $project_path
+    end
+
+    # Switch or attach depending on context
+    if set -q TMUX
+        tmux switch-client -t $project
+    else
+        tmux attach-session -t $project
+    end
 end

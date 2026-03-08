@@ -6,7 +6,7 @@ map("i", "jk", "<Esc>", { desc = "Exit insert mode" })
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
--- Window navigation (matches your zellij muscle memory)
+-- Window navigation (matches tmux Ctrl+hjkl pane nav)
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })

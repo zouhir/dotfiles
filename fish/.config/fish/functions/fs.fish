@@ -1,8 +1,14 @@
-function fs --description "Fuzzy search Zellij tabs in the current session"
-    if not set -q ZELLIJ
-        echo "Not inside Zellij. Run 'zd' to start a session first."
+function fs --description "Fuzzy switch between tmux sessions"
+    if not set -q TMUX
+        echo "Not inside tmux. Run 'fp' or 'fr' to start a session first."
         return 1
     end
 
-    zellij action launch-or-focus-plugin "session-manager" --floating
+    set -l session (tmux list-sessions -F "#{session_name}" | fzf --prompt="Session: ")
+
+    if test -z "$session"
+        return 0
+    end
+
+    tmux switch-client -t $session
 end

@@ -1,13 +1,8 @@
 function fr --description "Fuzzy pick from recently opened projects"
-    if not set -q ZELLIJ
-        echo "Not inside Zellij. Run 'zd' to start a session first."
-        return 1
-    end
-
     set -l projects_dir "$HOME/Projects"
-    set -l recents_file "$HOME/.local/share/zellij-recent-projects"
+    set -l recents_file "$HOME/.local/share/tmux-recent-projects"
 
-    if not test -f $recents_file; or test -z (cat $recents_file | string trim)
+    if not test -f $recents_file; or test -z "$(cat $recents_file | string trim)"
         echo "No recent projects. Use 'fp' to open a project first."
         return 1
     end
@@ -32,7 +27,15 @@ function fr --description "Fuzzy pick from recently opened projects"
     head -n 50 $tmp >$recents_file
     rm -f $tmp
 
-    # Jump to existing tab or create new one
-    zellij action go-to-tab-name $project 2>/dev/null
-    or zellij action new-tab --name $project --cwd $project_path
+    # Create session if it doesn't exist
+    if not tmux has-session -t=$project 2>/dev/null
+        tmux new-session -d -s $project -c $project_path
+    end
+
+    # Switch or attach depending on context
+    if set -q TMUX
+        tmux switch-client -t $project
+    else
+        tmux attach-session -t $project
+    end
 end

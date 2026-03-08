@@ -17,7 +17,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     echo "Installing packages via Homebrew..."
-    brew install fish stow git-delta zoxide direnv starship fnm go neovim zellij fzf fd ripgrep bat
+    brew install fish stow git-delta zoxide direnv starship fnm go neovim tmux fzf fd ripgrep bat
     brew install --cask font-jetbrains-mono-nerd-font
 
 else
@@ -27,27 +27,23 @@ else
     if command -v apt &> /dev/null; then
         echo "Installing packages via apt..."
         sudo apt update
-        sudo apt install -y fish stow zoxide direnv neovim fzf fd-find ripgrep bat
+        sudo apt install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat
         # fd and bat have different binary names on Debian/Ubuntu
         mkdir -p "$HOME/.local/bin"
         [ -x "$(command -v fdfind)" ] && ln -sf "$(which fdfind)" "$HOME/.local/bin/fd"
         [ -x "$(command -v batcat)" ] && ln -sf "$(which batcat)" "$HOME/.local/bin/bat"
     elif command -v dnf &> /dev/null; then
         echo "Installing packages via dnf..."
-        sudo dnf install -y fish stow zoxide direnv neovim fzf fd-find ripgrep bat
+        sudo dnf install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat
     elif command -v pacman &> /dev/null; then
         echo "Installing packages via pacman..."
-        sudo pacman -S --noconfirm fish stow zoxide direnv neovim fzf fd ripgrep bat
+        sudo pacman -S --noconfirm fish stow zoxide direnv neovim tmux fzf fd ripgrep bat
     else
         echo "Unknown package manager. Please install: fish stow zoxide direnv neovim fzf fd ripgrep bat"
         exit 1
     fi
 
-    # Zellij
-    if ! command -v zellij &> /dev/null; then
-        echo "Installing Zellij..."
-        bash <(curl -L https://zellij.dev/launch)
-    fi
+    # tmux (available via package managers above, no extra install needed)
 
     # Starship (cross-platform installer)
     if ! command -v starship &> /dev/null; then
@@ -91,7 +87,7 @@ stow -v -t "$HOME" git
 stow -v -t "$HOME" ghostty
 stow -v -t "$HOME" lazygit
 stow -v -t "$HOME" starship
-stow -v -t "$HOME" zellij
+stow -v -t "$HOME" tmux
 stow -v -t "$HOME" nvim
 
 # Install Node.js via fnm
