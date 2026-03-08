@@ -1,6 +1,6 @@
-function fp --description "Fuzzy pick a project and open it as a Zellij tab"
-    if not set -q ZELLIJ
-        echo "Not inside Zellij. Run 'zd' to start a session first."
+function fp --description "Fuzzy pick a project and open it in a Zellij session"
+    if set -q ZELLIJ
+        echo "Already inside Zellij. Detach first (Ctrl+o d) or use a bare terminal."
         return 1
     end
 
@@ -12,11 +12,15 @@ function fp --description "Fuzzy pick a project and open it as a Zellij tab"
     touch $recents_file
 
     # Pick a project with fzf
-    set -l project (fd --type d --max-depth 1 --base-directory $projects_dir | \
-        sed 's|/$||' | \
-        fzf --prompt="Project: " --preview="ls -la $projects_dir/{}")
+    set -l tmpfile (mktemp)
+    fd --type d --max-depth 1 --base-directory $projects_dir \
+        | sed 's|/$||' \
+        | fzf --prompt="Project: " --preview="ls -la $projects_dir/{}" >$tmpfile
+    set -l fzf_status $status
+    set -l project (string trim < $tmpfile)
+    rm -f $tmpfile
 
-    if test -z "$project"
+    if test $fzf_status -ne 0; or test -z "$project"
         return 0
     end
 
@@ -31,7 +35,7 @@ function fp --description "Fuzzy pick a project and open it as a Zellij tab"
     head -n 50 $tmp >$recents_file
     rm -f $tmp
 
-    # Jump to existing tab or create new one
-    zellij action go-to-tab-name $project 2>/dev/null
-    or zellij action new-tab --name $project --cwd $project_path
+    # Attach to existing session or create a new one in the project dir
+    cd $project_path
+    zellij attach --create $project
 end
