@@ -2,3 +2,5 @@
 .claude/
 codebase.md
 fish/.config/fish/fish_variables
+fish/.config/fish/conf.d/local.fish
+fish/.config/fish/functions/local/
