@@ -75,10 +75,21 @@ echo "Linking dotfiles..."
 cd "$DOTFILES_DIR"
 
 # Backup existing files that would conflict
-for file in .gitconfig .gitignore_global; do
-    if [ -f "$HOME/$file" ] && [ ! -L "$HOME/$file" ]; then
-        echo "Backing up ~/$file to ~/$file.bak"
-        mv "$HOME/$file" "$HOME/$file.bak"
+# This handles both root-level files like .gitconfig and .config/ subdirectories
+CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "starship.toml" "tmux")
+HOME_TARGETS=(".gitconfig" ".gitignore_global")
+
+for target in "${CONFIG_TARGETS[@]}"; do
+    if [ -e "$HOME/.config/$target" ] && [ ! -L "$HOME/.config/$target" ]; then
+        echo "Backing up ~/.config/$target to ~/.config/${target}.bak"
+        mv "$HOME/.config/$target" "$HOME/.config/${target}.bak"
+    fi
+done
+
+for target in "${HOME_TARGETS[@]}"; do
+    if [ -e "$HOME/$target" ] && [ ! -L "$HOME/$target" ]; then
+        echo "Backing up ~/$target to ~/$target.bak"
+        mv "$HOME/$target" "$HOME/$target.bak"
     fi
 done
 
