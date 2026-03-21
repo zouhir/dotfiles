@@ -77,7 +77,7 @@ cd "$DOTFILES_DIR"
 # Backup existing files that would conflict
 # This handles both root-level files like .gitconfig and .config/ subdirectories
 CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "starship.toml" "tmux")
-HOME_TARGETS=(".gitconfig" ".gitignore_global")
+HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config")
 
 for target in "${CONFIG_TARGETS[@]}"; do
     if [ -e "$HOME/.config/$target" ] && [ ! -L "$HOME/.config/$target" ]; then
@@ -88,13 +88,22 @@ done
 
 for target in "${HOME_TARGETS[@]}"; do
     if [ -e "$HOME/$target" ] && [ ! -L "$HOME/$target" ]; then
+        # Ensure parent directory exists for files like .ssh/config
+        mkdir -p "$(dirname "$HOME/$target")"
         echo "Backing up ~/$target to ~/$target.bak"
         mv "$HOME/$target" "$HOME/$target.bak"
     fi
 done
 
+# Ensure SSH environment is ready
+mkdir -p "$HOME/.ssh/sockets"
+touch "$HOME/.ssh/config.local"
+chmod 700 "$HOME/.ssh"
+chmod 600 "$HOME/.ssh/config.local" 2>/dev/null || true
+
 stow -v -t "$HOME" fish
 stow -v -t "$HOME" git
+stow -v -t "$HOME" ssh
 stow -v -t "$HOME" ghostty
 stow -v -t "$HOME" lazygit
 stow -v -t "$HOME" starship
