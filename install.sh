@@ -77,7 +77,7 @@ cd "$DOTFILES_DIR"
 # Backup existing files that would conflict
 # This handles both root-level files like .gitconfig and .config/ subdirectories
 CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "starship.toml" "tmux")
-HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config")
+HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config" ".ssh/config.local")
 
 for target in "${CONFIG_TARGETS[@]}"; do
     if [ -e "$HOME/.config/$target" ] && [ ! -L "$HOME/.config/$target" ]; then
@@ -97,9 +97,8 @@ done
 
 # Ensure SSH environment is ready
 mkdir -p "$HOME/.ssh/sockets"
-touch "$HOME/.ssh/config.local"
 chmod 700 "$HOME/.ssh"
-chmod 600 "$HOME/.ssh/config.local" 2>/dev/null || true
+chmod 600 "$HOME/Projects/dotfiles/ssh/.ssh/config.local" 2>/dev/null || true
 
 stow -v -t "$HOME" fish
 stow -v -t "$HOME" git

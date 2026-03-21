@@ -30,7 +30,9 @@ if test (uname) = Darwin
 end
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/.local/bin"
-fish_add_path "$HOME/.config/fish/functions/local"
+
+# Functions path
+set -p fish_function_path "$HOME/.config/fish/functions/local"
 
 # fnm (Node.js version manager)
 if type -q fnm
