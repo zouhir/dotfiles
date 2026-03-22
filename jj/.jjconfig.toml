@@ -1,0 +1,19 @@
+# Global configuration for Jujutsu (jj)
+
+[ui]
+default-command = "log"
+
+[ui.aliases]
+# General shortcuts
+s = ["status"]
+d = ["diff"]
+
+[colors]
+# TokyoNight Night Theme for JJ
+"id" = { fg = "#7aa2f7" }
+"change_id" = { fg = "#bb9af7" }
+"author" = { fg = "#9ece6a" }
+"timestamp" = { fg = "#e0af68" }
+"description" = { fg = "#c0caf5" }
+"working_copy" = { fg = "#f7768e", bold = true }
+"conflict" = { fg = "#f7768e", bold = true }
