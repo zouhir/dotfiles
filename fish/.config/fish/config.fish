@@ -1,5 +1,5 @@
 # Disable greeting
-set -U fish_greeting
+set -g fish_greeting
 
 # Locale
 set -x LANG en_US.UTF-8
@@ -31,9 +31,6 @@ end
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/.local/bin"
 
-# Functions path
-set -p fish_function_path "$HOME/.config/fish/functions/local"
-
 # fnm (Node.js version manager)
 if type -q fnm
     fnm env | source
@@ -47,11 +44,6 @@ end
 # Direnv (per-directory environment variables)
 if type -q direnv
     direnv hook fish | source
-end
-
-# Starship prompt
-if type -q starship
-    starship init fish | source
 end
 
 # fzf (fuzzy finder keybindings: Ctrl+R, Ctrl+T, Alt+C)

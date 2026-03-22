@@ -17,7 +17,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     echo "Installing packages via Homebrew..."
-    brew install fish stow git-delta zoxide direnv starship fnm go neovim tmux fzf fd ripgrep bat
+    brew install fish stow git-delta zoxide direnv fnm go neovim tmux fzf fd ripgrep bat
     brew install --cask font-jetbrains-mono-nerd-font
 
 else
@@ -45,12 +45,6 @@ else
 
     # tmux (available via package managers above, no extra install needed)
 
-    # Starship (cross-platform installer)
-    if ! command -v starship &> /dev/null; then
-        echo "Installing Starship..."
-        curl -sS https://starship.rs/install.sh | sh -s -- -y
-    fi
-
     # fnm (cross-platform installer)
     if ! command -v fnm &> /dev/null; then
         echo "Installing fnm..."
@@ -76,7 +70,7 @@ cd "$DOTFILES_DIR"
 
 # Backup existing files that would conflict
 # This handles both root-level files like .gitconfig and .config/ subdirectories
-CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "starship.toml" "tmux")
+CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "tmux")
 HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config" ".ssh/config.local")
 
 for target in "${CONFIG_TARGETS[@]}"; do
@@ -100,12 +94,14 @@ mkdir -p "$HOME/.ssh/sockets"
 chmod 700 "$HOME/.ssh"
 chmod 600 "$HOME/Projects/dotfiles/ssh/.ssh/config.local" 2>/dev/null || true
 
+# Create local functions dir for per-machine prompt overrides
+mkdir -p "$HOME/.config/fish/functions/local"
+
 stow -v -t "$HOME" fish
 stow -v -t "$HOME" git
 stow -v -t "$HOME" ssh
 stow -v -t "$HOME" ghostty
 stow -v -t "$HOME" lazygit
-stow -v -t "$HOME" starship
 stow -v -t "$HOME" tmux
 stow -v -t "$HOME" nvim
 
