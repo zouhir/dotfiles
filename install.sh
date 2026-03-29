@@ -17,8 +17,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     echo "Installing packages via Homebrew..."
-    brew install fish stow git-delta zoxide direnv fnm go neovim tmux fzf fd ripgrep bat jujutsu
-    brew install --cask font-jetbrains-mono-nerd-font
+    brew bundle --file="$DOTFILES_DIR/Brewfile"
+
+    # Apply macOS defaults
+    echo "Applying macOS defaults..."
+    bash "$DOTFILES_DIR/macos-defaults.sh"
 
 else
     echo "Detected Linux"
