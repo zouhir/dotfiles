@@ -35,6 +35,7 @@ cask "1password"
 cask "1password-cli"
 
 # Development
+cask "claude"
 cask "ghostty"
 cask "visual-studio-code"
 cask "docker"
