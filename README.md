@@ -13,12 +13,17 @@ Minimal dotfiles for macOS (and Linux) — fish shell, Neovim, Git, and terminal
 
 Everything uses the **TokyoNight Night** color scheme.
 
-## Install
+## Fresh Mac Setup
+
+On a brand-new Mac with nothing installed:
 
 ```bash
+# Install Xcode Command Line Tools (gives you git)
+xcode-select --install
+
+# Clone and run the install script
 git clone https://github.com/zouhir/dotfiles.git ~/Projects/dotfiles
-cd ~/Projects/dotfiles
-./install.sh
+cd ~/Projects/dotfiles && bash install.sh
 ```
 
 The install script will:
