@@ -108,6 +108,14 @@ chflags nohidden ~/Library
 # Show hidden files
 defaults write com.apple.finder AppleShowAllFiles -bool true
 
+# ─── Widgets ────────────────────────────────────────────────
+
+# Hide desktop widgets (standard desktop)
+defaults write com.apple.WindowManager StandardHideWidgets -bool true
+
+# Hide desktop widgets (Stage Manager)
+defaults write com.apple.WindowManager StageManagerHideWidgets -bool true
+
 # ─── Screenshots ─────────────────────────────────────────────
 
 # Save screenshots to ~/Screenshots
@@ -123,11 +131,11 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # ─── Safari ──────────────────────────────────────────────────
 
 # Show the full URL in the address bar
-defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true 2>/dev/null || true
 
 # Enable the Develop menu and Web Inspector
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari IncludeDevelopMenu -bool true 2>/dev/null || true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true 2>/dev/null || true
 
 # ─── Activity Monitor ───────────────────────────────────────
 
@@ -142,6 +150,24 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 
 # Use plain text mode by default
 defaults write com.apple.TextEdit RichText -int 0
+
+# ─── Spaces & Keyboard Shortcuts ────────────────────────────
+
+# NOTE: macOS doesn't support creating desktop spaces via defaults.
+# You must manually create 6 spaces in Mission Control before these
+# shortcuts will work (swipe up with 3 fingers, click "+" to add spaces).
+
+# Map CMD+1 through CMD+6 to switch to Desktop 1–6
+# Modifier 1048576 = Command key
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 118 '{"enabled" = 1; "value" = {"parameters" = (49, 18, 1048576); "type" = "standard";}; }'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 119 '{"enabled" = 1; "value" = {"parameters" = (50, 19, 1048576); "type" = "standard";}; }'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 120 '{"enabled" = 1; "value" = {"parameters" = (51, 20, 1048576); "type" = "standard";}; }'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 121 '{"enabled" = 1; "value" = {"parameters" = (52, 21, 1048576); "type" = "standard";}; }'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 122 '{"enabled" = 1; "value" = {"parameters" = (53, 23, 1048576); "type" = "standard";}; }'
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 123 '{"enabled" = 1; "value" = {"parameters" = (54, 22, 1048576); "type" = "standard";}; }'
+
+# Apply keyboard shortcut changes immediately
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
 
 # ─── Restart affected apps ──────────────────────────────────
 
