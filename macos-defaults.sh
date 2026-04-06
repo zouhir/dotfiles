@@ -151,6 +151,27 @@ defaults write com.apple.ActivityMonitor SortDirection -int 0
 # Use plain text mode by default
 defaults write com.apple.TextEdit RichText -int 0
 
+# ─── Sleep ──────────────────────────────────────────────────
+
+# Disable system sleep, display sleep, and disk sleep
+sudo pmset -a sleep 0
+sudo pmset -a displaysleep 0
+sudo pmset -a disksleep 0
+
+# ─── Mission Control ────────────────────────────────────────
+
+# Disable Mission Control shortcut (Ctrl+Up / ID 32)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 '{"enabled" = 0; "value" = {"parameters" = (65535, 126, 8650752); "type" = "standard";}; }'
+
+# Disable Application Windows shortcut (Ctrl+Down / ID 33)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 33 '{"enabled" = 0; "value" = {"parameters" = (65535, 125, 8650752); "type" = "standard";}; }'
+
+# Disable all hot corners
+defaults write com.apple.dock wvous-tl-corner -int 1
+defaults write com.apple.dock wvous-tr-corner -int 1
+defaults write com.apple.dock wvous-bl-corner -int 1
+defaults write com.apple.dock wvous-br-corner -int 1
+
 # ─── Spaces & Keyboard Shortcuts ────────────────────────────
 
 # NOTE: macOS doesn't support creating desktop spaces via defaults.
