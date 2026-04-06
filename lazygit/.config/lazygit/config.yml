@@ -11,18 +11,15 @@ gui:
   sidePanelWidth: 0.3333
   mainPanelSplitMode: flexible
   scrollPastBottom: true
-
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
   log:
     showGraph: always
     showWholeGraph: false
   autoFetch: true
   branchLogCmd: git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --
-
 os:
   editPreset: nvim
-
 promptToReturnFromSubprocess: false
