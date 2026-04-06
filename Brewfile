@@ -31,6 +31,9 @@ cask "firefox"
 cask "1password"
 cask "1password-cli"
 
+# Window management
+cask "rectangle-pro"
+
 # Development
 cask "claude"
 cask "ghostty"
