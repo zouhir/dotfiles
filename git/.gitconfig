@@ -1,6 +1,16 @@
 [user]
     name = zouhir
     email = zouhir@zouhir.org
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW3hUMMO5pXVHDesYNvSPobUWI4AtPUEUgZsHDZU16l
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+
+[commit]
+    gpgsign = true
 
 [core]
     editor = nvim
