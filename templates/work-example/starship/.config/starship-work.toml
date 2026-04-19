@@ -1,0 +1,64 @@
+# Starship config — work overlay (TokyoNight Night)
+# Same as the public ~/.config/starship.toml but with all git modules removed,
+# because the work dev server is not a git workflow.
+#
+# This file is selected by setting STARSHIP_CONFIG in fish/conf.d/work.fish.
+# Docs: https://starship.rs/config/
+
+add_newline = false
+
+format = """
+${custom.no_tmux}\
+$username\
+$hostname\
+$directory\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = '[›](bold #7aa2f7)'
+error_symbol   = '[›](bold #f7768e)'
+vicmd_symbol   = '[‹](bold #bb9af7)'
+
+[directory]
+style = 'bold #7aa2f7'
+truncation_length = 4
+truncate_to_repo  = false
+format = '[$path]($style)[$read_only]($read_only_style) '
+read_only = ' 󰌾'
+read_only_style = '#f7768e'
+
+[git_branch]
+disabled = true
+
+[git_status]
+disabled = true
+
+[git_state]
+disabled = true
+
+[git_commit]
+disabled = true
+
+[cmd_duration]
+min_time = 2000
+style  = '#e0af68'
+format = '[$duration]($style) '
+
+[username]
+style_user = '#7dcfff'
+style_root = '#f7768e'
+format     = '[$user]($style)'
+
+[hostname]
+ssh_only = true
+style  = '#7dcfff'
+format = '[@$hostname]($style) '
+
+[custom.no_tmux]
+when        = '[ -z "$TMUX" ]'
+command     = 'printf ◌'
+description = 'Indicator when shell is not inside tmux'
+format      = '[$output ]($style)'
+style       = 'bold #565f89'

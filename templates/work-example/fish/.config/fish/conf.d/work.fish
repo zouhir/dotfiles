@@ -15,3 +15,7 @@
 
 # Work-only env (API tokens, endpoints — keep out of public dotfiles)
 # set -x CORP_ARTIFACTORY https://artifactory.corp.example
+
+# Point starship at the work-only config (no git modules, since work isn't git-based).
+# The public ~/.config/starship.toml stays untouched; this var just redirects starship.
+set -gx STARSHIP_CONFIG $HOME/.config/starship-work.toml

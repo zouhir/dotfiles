@@ -24,6 +24,7 @@ The work repo NEVER overwrites files owned by the public repo — it only writes
 | `~/.config/fish/functions/*.fish` (non-colliding names) | `~/.config/fish/functions/work_*.fish` |
 | `~/.ssh/config` | `~/.ssh/config.d/work` (via `Include config.d/*`) |
 | `~/.gitconfig` | `~/.config/git/work.conf` (via `includeIf gitdir:~/work/`) |
+| `~/.config/starship.toml` | `~/.config/starship-work.toml` (selected via `STARSHIP_CONFIG` in `conf.d/work.fish`) |
 
 ## Committing without cross-contamination
 
@@ -36,6 +37,7 @@ A belt-and-braces habit: `git remote -v` before `git push` on anything touching 
 - **Git**: `includeIf "gitdir:~/work/"` fires when the repo you're in lives under `~/work/`. Keep work clones there.
 - **SSH**: `Include config.d/*` — any filename works, but prefer one file per logical group (`work-bastion`, `work-k8s`, etc.) so removal is easy.
 - **Fish**: `conf.d/*.fish` is auto-sourced in lexical order; `functions/*.fish` is lazy-loaded by function name.
+- **Starship**: has no include mechanism, so the work overlay ships a full duplicate `starship-work.toml` and points starship at it via `STARSHIP_CONFIG`. Keep it in sync with the public `starship.toml` by hand — when editing one, mirror structural changes to the other (the work copy intentionally drops all `git_*` modules).
 
 ## Files in this template
 

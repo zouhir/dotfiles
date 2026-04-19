@@ -8,7 +8,7 @@ cd "$(dirname "$0")"
 
 command -v stow >/dev/null || { echo "GNU stow not installed — run public dotfiles install.sh first" >&2; exit 1; }
 
-for pkg in fish ssh git; do
+for pkg in fish ssh git starship; do
     [ -d "$pkg" ] && stow -v -t "$HOME" "$pkg"
 done
 
