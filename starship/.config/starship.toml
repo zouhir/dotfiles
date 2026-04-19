@@ -1,0 +1,71 @@
+# Starship config — TokyoNight Night
+# Docs: https://starship.rs/config/
+
+add_newline = false
+
+format = """
+${custom.no_tmux}\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = '[›](bold #7aa2f7)'
+error_symbol   = '[›](bold #f7768e)'
+vicmd_symbol   = '[‹](bold #bb9af7)'
+
+[directory]
+style = 'bold #7aa2f7'
+truncation_length = 4
+truncate_to_repo  = true
+format = '[$path]($style)[$read_only]($read_only_style) '
+read_only = ' 󰌾'
+read_only_style = '#f7768e'
+
+[git_branch]
+symbol = ' '
+style  = '#bb9af7'
+format = '[$symbol$branch]($style) '
+
+[git_status]
+style = '#9ece6a'
+format = '([\[$all_status$ahead_behind\]]($style) )'
+conflicted = '!'
+ahead      = '⇡${count}'
+behind     = '⇣${count}'
+diverged   = '⇕'
+untracked  = '?'
+stashed    = '$'
+modified   = '!'
+staged     = '+'
+renamed    = '»'
+deleted    = '✘'
+
+[cmd_duration]
+min_time = 2000
+style  = '#e0af68'
+format = '[$duration]($style) '
+
+[username]
+style_user = '#7dcfff'
+style_root = '#f7768e'
+format     = '[$user]($style)'
+# Shown automatically when SSH'd or root
+
+[hostname]
+ssh_only = true
+style  = '#7dcfff'
+format = '[@$hostname]($style) '
+
+# Dim ◌ when we're NOT inside tmux. Disappears silently once $TMUX is set.
+[custom.no_tmux]
+when        = '[ -z "$TMUX" ]'
+command     = 'printf ◌'
+description = 'Indicator when shell is not inside tmux'
+format      = '[$output ]($style)'
+style       = 'bold #565f89'

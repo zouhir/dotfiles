@@ -30,20 +30,37 @@ else
     if command -v apt &> /dev/null; then
         echo "Installing packages via apt..."
         sudo apt update
-        sudo apt install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat jj-cli
+        sudo apt install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat jj-cli eza gh
         # fd and bat have different binary names on Debian/Ubuntu
         mkdir -p "$HOME/.local/bin"
         [ -x "$(command -v fdfind)" ] && ln -sf "$(which fdfind)" "$HOME/.local/bin/fd"
         [ -x "$(command -v batcat)" ] && ln -sf "$(which batcat)" "$HOME/.local/bin/bat"
     elif command -v dnf &> /dev/null; then
         echo "Installing packages via dnf..."
-        sudo dnf install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat jujutsu
+        sudo dnf install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat jujutsu starship eza gh
     elif command -v pacman &> /dev/null; then
         echo "Installing packages via pacman..."
-        sudo pacman -S --noconfirm fish stow zoxide direnv neovim tmux fzf fd ripgrep bat jujutsu
+        sudo pacman -S --noconfirm fish stow zoxide direnv neovim tmux fzf fd ripgrep bat jujutsu starship eza github-cli atuin mise
     else
         echo "Unknown package manager. Please install: fish stow zoxide direnv neovim fzf fd ripgrep bat"
         exit 1
+    fi
+
+    # atuin and mise are not in default apt/dnf repos — use official installers.
+    # Both stay local-only by default (atuin needs explicit `atuin register` to sync).
+    if ! command -v atuin &> /dev/null; then
+        echo "Installing atuin..."
+        curl -fsSL --proto '=https' --tlsv1.2 https://setup.atuin.sh | sh -s -- --no-modify-path
+    fi
+    if ! command -v mise &> /dev/null; then
+        echo "Installing mise..."
+        curl -fsSL https://mise.run | sh
+    fi
+
+    # Starship: not in default apt repos, use official installer as fallback
+    if ! command -v starship &> /dev/null; then
+        echo "Installing starship..."
+        curl -sS https://starship.rs/install.sh | sh -s -- -y
     fi
 
     # tmux (available via package managers above, no extra install needed)
@@ -74,7 +91,7 @@ cd "$DOTFILES_DIR"
 # Backup existing files that would conflict
 # This handles both root-level files like .gitconfig and .config/ subdirectories
 CONFIG_TARGETS=("fish" "ghostty" "lazygit" "nvim" "tmux" )
-HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config" ".ssh/config.local" ".jjconfig.local.toml")
+HOME_TARGETS=(".gitconfig" ".gitignore_global" ".ssh/config" ".ssh/config.local" ".jjconfig.local.toml" ".config/starship.toml")
 
 for target in "${CONFIG_TARGETS[@]}"; do
     if [ -e "$HOME/.config/$target" ] && [ ! -L "$HOME/.config/$target" ]; then
@@ -108,6 +125,7 @@ stow -v -t "$HOME" lazygit
 stow -v -t "$HOME" tmux
 stow -v -t "$HOME" jj
 stow -v -t "$HOME" nvim
+stow -v -t "$HOME" starship
 
 # Install Node.js via fnm
 if command -v fnm &> /dev/null; then

@@ -59,7 +59,7 @@ dotfiles/
 ├── install.sh          # Bootstrap script
 ├── fish/               # Fish shell config
 │   └── config.fish     # Main config, abbreviations
-│   └── functions/      # fp, fr, fs, zd (project switcher)
+│   └── functions/      # fs (session switcher), t (tmux project helper)
 │   └── conf.d/         # fzf, rustup
 ├── git/                # Git config + global gitignore
 ├── ghostty/            # Ghostty terminal config
