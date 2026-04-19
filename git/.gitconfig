@@ -77,3 +77,8 @@
 
 [url "git@github.com:"]
     insteadOf = https://github.com/
+
+# Work overrides live in a separate private repo stowed onto this machine.
+# Git silently ignores a missing include path, so this is a no-op on personal machines.
+[includeIf "gitdir:~/work/"]
+    path = ~/.config/git/work.conf

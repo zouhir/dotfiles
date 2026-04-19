@@ -5,5 +5,5 @@ fish/.config/fish/fish_variables
 fish/.config/fish/conf.d/local.fish
 fish/.config/fish/functions/local/
 ssh/.ssh/config.local
+ssh/.ssh/config.d/
 ssh/.ssh/sockets/
-jj/.jjconfig.local.toml

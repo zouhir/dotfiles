@@ -20,6 +20,7 @@ cursor-style-blink = false
 
 # Shell
 shell-integration = fish
+shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
 
 # Clipboard
 copy-on-select = true

@@ -37,8 +37,22 @@ opt.backup = false
 opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
--- Clipboard: use system clipboard
+-- Clipboard: use system clipboard. Over SSH, route through OSC 52 so yanks
+-- land in the LOCAL clipboard (Ghostty/tmux decode the escape sequence).
 opt.clipboard = "unnamedplus"
+if os.getenv("SSH_CONNECTION") ~= nil or os.getenv("SSH_TTY") ~= nil then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+end
 
 -- Completion
 opt.completeopt = "menu,menuone,noselect"
