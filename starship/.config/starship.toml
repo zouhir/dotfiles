@@ -4,7 +4,6 @@
 add_newline = false
 
 format = """
-${custom.no_tmux}\
 $username\
 $hostname\
 $directory\
@@ -60,12 +59,5 @@ format     = '[$user]($style)'
 [hostname]
 ssh_only = true
 style  = '#7dcfff'
-format = '[@$hostname]($style) '
+format     = '[@$hostname]($style) '
 
-# Dim ◌ when we're NOT inside tmux. Disappears silently once $TMUX is set.
-[custom.no_tmux]
-when        = '[ -z "$TMUX" ]'
-command     = 'printf ◌'
-description = 'Indicator when shell is not inside tmux'
-format      = '[$output ]($style)'
-style       = 'bold #565f89'
