@@ -21,7 +21,6 @@ brew "wget"
 brew "htop"
 brew "tree"
 brew "starship"
-brew "atuin"
 brew "gh"
 
 # Fonts

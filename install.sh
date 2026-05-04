@@ -40,17 +40,10 @@ else
         sudo dnf install -y fish stow zoxide direnv neovim tmux fzf fd-find ripgrep bat starship eza gh
     elif command -v pacman &> /dev/null; then
         echo "Installing packages via pacman..."
-        sudo pacman -S --noconfirm fish stow zoxide direnv neovim tmux fzf fd ripgrep bat starship eza github-cli atuin mise
+        sudo pacman -S --noconfirm fish stow zoxide direnv neovim tmux fzf fd ripgrep bat starship eza github-cli mise
     else
         echo "Unknown package manager. Please install: fish stow zoxide direnv neovim fzf fd ripgrep bat"
         exit 1
-    fi
-
-    # atuin and mise are not in default apt/dnf repos — use official installers.
-    # Both stay local-only by default (atuin needs explicit `atuin register` to sync).
-    if ! command -v atuin &> /dev/null; then
-        echo "Installing atuin..."
-        curl -fsSL --proto '=https' --tlsv1.2 https://setup.atuin.sh | sh -s -- --no-modify-path
     fi
     if ! command -v mise &> /dev/null; then
         echo "Installing mise..."
