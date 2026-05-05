@@ -10,6 +10,7 @@ Minimal dotfiles for macOS (and Linux) — fish shell, Neovim, Git, and terminal
 - **ghostty** — [Ghostty](https://ghostty.org/) terminal config
 - **lazygit** — [Lazygit](https://github.com/jesseduffield/lazygit) config
 - **starship** — [Starship](https://starship.rs/) prompt
+- **tmux** — Terminal multiplexer config
 
 Everything uses the **TokyoNight Night** color scheme.
 
@@ -38,7 +39,7 @@ If you prefer not to use the install script:
 
 ```bash
 brew install fish go fnm stow
-stow -v -t $HOME fish git ghostty lazygit starship nvim
+stow -v -t $HOME fish git ghostty lazygit starship nvim tmux
 fnm install --lts
 ```
 
@@ -58,13 +59,15 @@ After cloning, update `git/.gitconfig` with your own name and email:
 dotfiles/
 ├── install.sh          # Bootstrap script
 ├── fish/               # Fish shell config
-│   └── config.fish     # Main config, abbreviations
-│   └── functions/      # fs (session switcher), t (tmux project helper)
-│   └── conf.d/         # fzf, rustup
+│   └── .config/fish/
+│       ├── config.fish # Main config, abbreviations
+│       ├── functions/  # fs (session switcher), t (tmux project helper)
+│       └── conf.d/     # fzf, rustup
 ├── git/                # Git config + global gitignore
 ├── ghostty/            # Ghostty terminal config
 ├── lazygit/            # Lazygit config
 ├── starship/           # Starship prompt config
+├── tmux/               # Tmux config
 └── nvim/               # Neovim config (LazyVim)
 ```
 
