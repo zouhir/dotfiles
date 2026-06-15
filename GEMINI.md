@@ -2,7 +2,7 @@
 
 ## Overview
 
-Minimal dotfiles repo for macOS (primary) and Linux. Uses GNU Stow for symlink management. Everything uses the **TokyoNight Night** color scheme.
+Minimal dotfiles repo for macOS (primary) and Linux. Uses GNU Stow for symlink management. Everything uses the **TokyoNight Night** color scheme. **No Homebrew** — on macOS, CLI tools are installed from upstream release binaries / official scripts; on Linux, via apt/dnf/pacman.
 
 ## Stow Convention
 
@@ -22,7 +22,9 @@ When adding a new tool config, you must:
 
 1. Create the stow directory with the correct path structure (see above)
 2. Add the `stow -v -t "$HOME" toolname` line in `install.sh`
-3. Add the package to the brew install line (macOS) AND the apt/dnf/pacman install lines (Linux) in `install.sh`
+3. Add the tool to the package installers in `install.sh`:
+   - **macOS** (`install_macos_tools`): add a `fetch_gh <bin> <owner/repo> <asset-regex>` line for a tool with a prebuilt release binary, or a dedicated block for script/source installs
+   - **Linux**: add it to the apt/dnf/pacman install lines
 
 ## Key Constraints
 
