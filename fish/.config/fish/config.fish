@@ -10,13 +10,6 @@ set -x XDG_CONFIG_HOME "$HOME/.config"
 set -x XDG_DATA_HOME "$HOME/.local/share"
 set -x XDG_CACHE_HOME "$HOME/.cache"
 
-# Homebrew (macOS only)
-if test (uname) = Darwin
-    set -x HOMEBREW_PREFIX /opt/homebrew
-    set -x HOMEBREW_NO_AUTO_UPDATE 1
-    set -x HOMEBREW_NO_ANALYTICS 1
-end
-
 # Editor
 set -x EDITOR nvim
 
@@ -24,10 +17,8 @@ set -x EDITOR nvim
 set -x LESS '-R -i -M'
 
 # PATH
-if test (uname) = Darwin
-    fish_add_path /opt/homebrew/bin
-    fish_add_path /opt/homebrew/sbin
-end
+# CLI tools install to ~/.local/bin; Go toolchain to ~/.local/go (see install.sh)
+fish_add_path "$HOME/.local/go/bin"
 fish_add_path "$HOME/go/bin"
 fish_add_path "$HOME/.local/bin"
 
@@ -88,11 +79,6 @@ abbr -a md 'mkdir -p'
 abbr -a .. 'cd ..'
 abbr -a ... 'cd ../..'
 abbr -a .... 'cd ../../..'
-
-# Homebrew
-abbr -a bi 'brew install'
-abbr -a bu 'brew update && brew upgrade'
-abbr -a bs 'brew search'
 
 # Search
 abbr -a ff 'fd --type f --hidden'
