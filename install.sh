@@ -274,8 +274,8 @@ mkdir -p "$HOME/.ssh/sockets"
 chmod 700 "$HOME/.ssh"
 chmod 600 "$HOME/Projects/dotfiles/ssh/.ssh/config.local" 2>/dev/null || true
 
-# Create local functions dir for per-machine prompt overrides
-mkdir -p "$HOME/.config/fish/functions/local"
+# Create local functions dir and conf.d for per-machine overrides and overlays
+mkdir -p "$HOME/.config/fish/conf.d" "$HOME/.config/fish/functions/local"
 
 stow -v -t "$HOME" fish
 stow -v -t "$HOME" git
