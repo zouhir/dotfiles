@@ -160,11 +160,11 @@ sudo pmset -a disksleep 0
 
 # ─── Mission Control ────────────────────────────────────────
 
-# Disable Mission Control shortcut (Ctrl+Up / ID 32)
-defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 '{"enabled" = 0; "value" = {"parameters" = (65535, 126, 8650752); "type" = "standard";}; }'
+# Enable Mission Control shortcut (Ctrl+Up / ID 32)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 '{"enabled" = 1; "value" = {"parameters" = (65535, 126, 8650752); "type" = "standard";}; }'
 
-# Disable Application Windows shortcut (Ctrl+Down / ID 33)
-defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 33 '{"enabled" = 0; "value" = {"parameters" = (65535, 125, 8650752); "type" = "standard";}; }'
+# Enable Application Windows shortcut (Ctrl+Down / ID 33)
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 33 '{"enabled" = 1; "value" = {"parameters" = (65535, 125, 8650752); "type" = "standard";}; }'
 
 # Disable all hot corners
 defaults write com.apple.dock wvous-tl-corner -int 1
