@@ -166,8 +166,11 @@ defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 32 '{"en
 # Enable Application Windows shortcut (Ctrl+Down / ID 33)
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 33 '{"enabled" = 1; "value" = {"parameters" = (65535, 125, 8650752); "type" = "standard";}; }'
 
-# Disable all hot corners
-defaults write com.apple.dock wvous-tl-corner -int 1
+# Top-left hot corner: Mission Control
+defaults write com.apple.dock wvous-tl-corner -int 2
+defaults write com.apple.dock wvous-tl-modifier -int 0
+
+# Disable other hot corners
 defaults write com.apple.dock wvous-tr-corner -int 1
 defaults write com.apple.dock wvous-bl-corner -int 1
 defaults write com.apple.dock wvous-br-corner -int 1
