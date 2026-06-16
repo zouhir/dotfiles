@@ -241,7 +241,7 @@ fi
 
 if [ "$SHELL" != "$FISH_PATH" ]; then
     echo "Setting fish as default shell..."
-    chsh -s "$FISH_PATH"
+    chsh -s "$FISH_PATH" || true
 fi
 
 # Symlink dotfiles
