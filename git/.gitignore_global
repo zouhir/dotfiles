@@ -18,3 +18,9 @@
 # Dependencies
 node_modules/
 vendor/
+
+# Local Claude settings
+**/.claude/settings.local.json
+
+# tmux plugin manager (managed by TPM)
+tmux/.config/tmux/plugins/
