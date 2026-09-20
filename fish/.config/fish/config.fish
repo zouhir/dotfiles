@@ -13,6 +13,15 @@ set -x XDG_CACHE_HOME "$HOME/.cache"
 # Editor
 set -x EDITOR nvim
 
+# Dotfiles checkout — resolved from this file's own stow symlink, used by `dotup`
+if not set -q DOTFILES
+    set -l _self (realpath (status filename) 2>/dev/null)
+    set -l _root (string replace -r '/fish/\.config/fish/config\.fish$' '' -- "$_self")
+    if test -n "$_root" -a -f "$_root/update.sh"
+        set -gx DOTFILES $_root
+    end
+end
+
 # Pager (less) options: colors, case-insensitive search, verbose prompt
 set -x LESS '-R -i -M'
 
