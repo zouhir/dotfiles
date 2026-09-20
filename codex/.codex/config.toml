@@ -1,0 +1,19 @@
+# Codex CLI — https://github.com/openai/codex
+#
+# SEED FILE, NOT A SYMLINK. Codex rewrites ~/.codex/config.toml itself when you
+# switch models or toggle plugins, so install.sh only copies this in when
+# ~/.codex/config.toml does not exist yet. Machine-generated sections (plugins,
+# marketplaces, mcp_servers, notify) are deliberately left out — Codex adds them
+# back on its own.
+
+# Reasoning budget for every model. Lower it to "medium" if responses feel slow.
+model_reasoning_effort = "xhigh"
+
+# Leave the model unset so Codex picks its current default; pin it here if you
+# want a specific one and are sure it is available on this account.
+# model = "gpt-6-astra"
+
+# Ask before running a command that writes outside the workspace or touches the
+# network. "on-request" lets Codex work uninterrupted inside the repo.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
