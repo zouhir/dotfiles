@@ -1,5 +1,5 @@
 return {
-  -- Theme: TokyoNight Night (matches ghostty/starship/delta)
+  -- Theme: TokyoNight Night (matches iterm2/starship/delta)
   {
     "folke/tokyonight.nvim",
     opts = {

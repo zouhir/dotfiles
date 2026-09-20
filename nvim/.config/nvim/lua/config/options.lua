@@ -38,7 +38,7 @@ opt.undofile = true
 opt.undodir = vim.fn.stdpath("data") .. "/undo"
 
 -- Clipboard: use system clipboard. Over SSH, route through OSC 52 so yanks
--- land in the LOCAL clipboard (Ghostty/tmux decode the escape sequence).
+-- land in the LOCAL clipboard (iTerm2/tmux decode the escape sequence).
 opt.clipboard = "unnamedplus"
 if os.getenv("SSH_CONNECTION") ~= nil or os.getenv("SSH_TTY") ~= nil then
   vim.g.clipboard = {
@@ -57,7 +57,7 @@ end
 -- Completion
 opt.completeopt = "menu,menuone,noselect"
 
--- Ghostty / true color support
+-- True colour / floating-window blending
 opt.pumblend = 10
 opt.winblend = 10
 
