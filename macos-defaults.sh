@@ -59,6 +59,9 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+# Disable "natural" scrolling — scroll up = up, down = down (takes effect after logout)
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
 # ─── Dock ────────────────────────────────────────────────────
 
 # Set icon size
@@ -78,6 +81,30 @@ defaults write com.apple.dock autohide-delay -float 0
 
 # Speed up auto-hide animation
 defaults write com.apple.dock autohide-time-modifier -float 0.3
+
+# Reset the Dock's app section and pin only the apps below, in this order.
+# Apps that aren't installed are skipped. The stacks/folders on the right side
+# of the Dock (persistent-others) are left untouched.
+dock_add_app() {
+    local name="$1" app=""
+    for dir in "/Applications" "$HOME/Applications" "/System/Applications" "/System/Applications/Utilities"; do
+        if [ -d "$dir/$name.app" ]; then
+            app="$dir/$name.app"
+            break
+        fi
+    done
+    if [ -z "$app" ]; then
+        echo "  Dock: skipping $name (not installed)"
+        return 0
+    fi
+    defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+}
+
+defaults write com.apple.dock persistent-apps -array
+
+for dock_app in "Google Chrome" "iTerm" "Codex" "Claude"; do
+    dock_add_app "$dock_app"
+done
 
 # ─── Finder ──────────────────────────────────────────────────
 
