@@ -18,3 +18,5 @@
 # Dependencies
 node_modules/
 vendor/
+
+**/.claude/settings.local.json
