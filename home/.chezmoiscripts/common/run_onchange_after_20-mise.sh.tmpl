@@ -1,0 +1,7 @@
+#!/bin/bash
+# config.toml hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:$PATH"
+command -v mise >/dev/null || curl -fsSL https://mise.run | sh
+mise install

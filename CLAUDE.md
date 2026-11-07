@@ -2,31 +2,26 @@
 
 ## Overview
 
-Minimal dotfiles repo for macOS (primary) and Linux. Uses GNU Stow for symlink management. Everything uses the **TokyoNight Night** color scheme. **No Homebrew** — on macOS, CLI tools are installed from upstream release binaries / official scripts; on Linux, via apt/dnf/pacman.
+Personal dotfiles for two machines, managed with chezmoi: a MacBook and a Fedora Workstation Framework Desktop. Everything uses the **TokyoNight Night** color scheme. No work configuration belongs in this public repo.
 
-## Stow Convention
+## Layout
 
-Each top-level directory is a stow package that mirrors `$HOME`. Paths must follow this structure:
+`.chezmoiroot` points chezmoi at `home/`. Everything outside `home/` is repo documentation.
 
-```
-tool/.config/tool/config-file
-```
-
-For example, `fish/.config/fish/config.fish` symlinks to `~/.config/fish/config.fish`. Git is an exception — it uses `git/.gitconfig` (maps to `~/.gitconfig`).
+- `home/dot_config/<tool>/` — tool configs, using chezmoi's naming (`dot_`, `private_`, `.tmpl`)
+- `home/.chezmoidata/packages.yaml` — OS-level packages: Homebrew and dnf/Flatpak
+- `home/dot_config/mise/config.toml` — CLI tools and runtimes for both machines
+- `home/.chezmoiscripts/{common,darwin,fedora}/` — setup scripts, numbered by run order
 
 ## Adding a New Tool
 
-When adding a new tool config, you must:
-
-1. Create the stow directory with the correct path structure (see above)
-2. Add the `stow -v -t "$HOME" toolname` line in `install.sh`
-3. Add the tool to the package installers in `install.sh`:
-   - **macOS** (`install_macos_tools`): add a `fetch_gh <bin> <owner/repo> <asset-regex>` line for a tool with a prebuilt release binary, or a dedicated block for script/source installs
-   - **Linux**: add it to the apt/dnf/pacman install lines
+1. Add a CLI tool or runtime to `home/dot_config/mise/config.toml`. Use `packages.yaml` only for GUI apps and things the OS must own, such as the shell.
+2. Add its config under `home/dot_config/`.
+3. Use a `.tmpl` file only when the two machines genuinely differ.
 
 ## Key Constraints
 
-- Do not modify `git/.gitconfig` user name/email — those are personal
-- New configs must use TokyoNight Night theme where applicable
-- macOS is the primary target; Linux support uses apt, dnf, and pacman
-- Stow packages are flat — one top-level directory per tool, no nesting
+- Keep v2 small. Prefer upstream defaults, and don't copy settings that match them.
+- Never commit secrets, private keys or host details. Resolve secrets at runtime with `op`.
+- Do not modify the user name or email in `home/dot_gitconfig.tmpl`.
+- New configs must use TokyoNight Night where applicable.

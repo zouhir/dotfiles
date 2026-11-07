@@ -1,0 +1,37 @@
+# OS-level packages only. CLI tools and runtimes live in dot_config/mise/config.toml.
+packages:
+  darwin:
+    formulae:
+      - fish
+      - tmux
+    casks:
+      - 1password
+      - 1password-cli
+      - claude
+      - firefox
+      - font-jetbrains-mono-nerd-font
+      - ghostty
+      - google-chrome
+      - orbstack
+      - rectangle-pro
+      - spotify
+      - visual-studio-code
+  fedora:
+    dnf:
+      - 1password
+      - 1password-cli
+      - code
+      - fish
+      - gcc
+      - ghostty
+      - git
+      - google-chrome-stable
+      - keyd
+      - make
+      - podman-docker
+      - tmux
+      - unzip
+      - util-linux-user
+      - wl-clipboard
+    flatpak:
+      - com.spotify.Client

@@ -1,0 +1,6 @@
+{{ if eq .chezmoi.os "linux" -}}
+[".local/share/fonts/JetBrainsMonoNerd"]
+    type = "archive"
+    url = "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+    refreshPeriod = "720h"
+{{- end }}

@@ -1,0 +1,5 @@
+# herdr — terminal multiplexer for AI coding agents
+# Reference: https://herdr.dev/docs/configuration/
+
+[theme]
+name = "tokyo-night"

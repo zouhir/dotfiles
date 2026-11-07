@@ -1,0 +1,26 @@
+{{- if eq .chezmoi.os "darwin" -}}
+# OrbStack's include only works above every Host block.
+Include ~/.orbstack/ssh/config
+
+{{ end -}}
+# Host details stay out of this public repo. See "After sign-in" in the README.
+Include config.local
+
+# ssh_config is first-match-wins, so host blocks go before `Host *`.
+Host github.com
+    User git
+    IdentityAgent "{{ .onePasswordAgent }}"
+
+Host yoyo-prod
+    IdentityAgent "{{ .onePasswordAgent }}"
+
+Host aarma-prod
+    IdentityAgent "{{ .onePasswordAgent }}"
+
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h:%p
+    ControlPersist 10m
+    ServerAliveInterval 60
+    ServerAliveCountMax 5
+    ForwardAgent no

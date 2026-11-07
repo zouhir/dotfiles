@@ -1,0 +1,25 @@
+# https://ghostty.org/docs/config
+theme = TokyoNight Night
+
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+
+window-padding-x = 12
+window-padding-y = 8
+
+cursor-style = bar
+cursor-style-blink = false
+
+shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
+copy-on-select = true
+scrollback-limit = 10000
+{{- if eq .chezmoi.os "darwin" }}
+
+macos-titlebar-style = hidden
+macos-option-as-alt = true
+{{- else }}
+
+# keyd sends these for Cmd+C and Cmd+V, so copy never becomes a stray Ctrl+C.
+keybind = ctrl+insert=copy_to_clipboard
+keybind = shift+insert=paste_from_clipboard
+{{- end }}

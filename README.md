@@ -1,97 +1,68 @@
 # dotfiles
 
-Minimal dotfiles for macOS (and Linux) — fish shell, Neovim, Git, and terminal tools.
+Personal setup for a MacBook and a Fedora Workstation Framework Desktop, managed with [chezmoi](https://www.chezmoi.io/). Uses fish, Ghostty, Neovim (LazyVim), mise and 1Password, all in TokyoNight Night.
 
-## What's included
-
-- **fish** — Shell config, abbreviations, and fuzzy project switcher functions
-- **nvim** — Neovim config ([LazyVim](https://www.lazyvim.org/)) with TypeScript, Rust, HTML/CSS support
-- **git** — Git config with [delta](https://github.com/dandavison/delta) for diffs
-- **ghostty** — [Ghostty](https://ghostty.org/) terminal config
-- **lazygit** — [Lazygit](https://github.com/jesseduffield/lazygit) config
-- **starship** — [Starship](https://starship.rs/) prompt
-- **tmux** — Terminal multiplexer config
-
-Everything uses the **TokyoNight Night** color scheme.
-
-## Fresh Mac Setup
-
-On a brand-new Mac with nothing installed:
+## Install
 
 ```bash
-# Install Xcode Command Line Tools (gives you git, make, and a compiler)
-xcode-select --install
-
-# Clone and run the install script
-git clone https://github.com/zouhir/dotfiles.git ~/Projects/dotfiles
-cd ~/Projects/dotfiles && bash install.sh
+sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin init --apply zouhir
 ```
 
-**No Homebrew required.** On macOS the install script pulls each CLI tool
-directly from upstream — prebuilt release binaries into `~/.local/bin`, the Go
-toolchain into `~/.local/go`, fish via its signed `.pkg`, and [GNU Stow](https://www.gnu.org/software/stow/)
-built from source. On Linux it uses the native package manager (apt/dnf/pacman).
+This installs packages, tools and configs, then applies system settings. It asks for your password when needed, and Homebrew may ask to install the Xcode Command Line Tools.
 
-The install script will:
-- Install CLI tools (fish, neovim, tmux, fzf, fd, ripgrep, bat, delta, lazygit,
-  gh, jq, zoxide, direnv, starship, fnm, go, stow) — no Homebrew on macOS
-- Set fish as the default shell
-- Symlink configs using GNU Stow
-- Install Node.js LTS via [fnm](https://github.com/Schniz/fnm)
+## After sign-in
 
-> **Tip:** export a `GITHUB_TOKEN` before running on macOS to avoid GitHub's
-> unauthenticated API rate limit while resolving release downloads.
+These steps can't be scripted:
 
-## Applications (GUI)
+1. Open 1Password and sign in.
+2. In **Settings → Developer**, turn on the SSH agent and CLI integration.
+3. Restore SSH host details:
 
-GUI apps are not installed by the script — grab them manually:
+   ```bash
+   op read "op://Private/ssh-hosts/notesPlain" > ~/.ssh/config.local
+   chmod 600 ~/.ssh/config.local
+   ```
 
-- [JetBrains Mono Nerd Font](https://www.nerdfonts.com/font-downloads)
-- [Ghostty](https://ghostty.org/) — terminal
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Claude](https://claude.ai/download) — desktop app
-- [1Password](https://1password.com/downloads/mac) + [1Password CLI](https://developer.1password.com/docs/cli/get-started/)
-- [Google Chrome](https://www.google.com/chrome/) · [Firefox](https://www.mozilla.org/firefox/)
-- [Rectangle Pro](https://rectangleapp.com/pro) — window management
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Spotify](https://www.spotify.com/download/)
+4. On macOS, create nine desktops in Mission Control so `Ctrl+1–9` works.
+5. On Fedora, reboot so the GPU memory limit applies.
 
-## Manual setup
-
-If you prefer not to use the install script (tools already installed):
+API keys stay in 1Password and load at runtime, for example:
 
 ```bash
-stow -v -t $HOME fish git ssh ghostty lazygit starship nvim tmux
-fnm install --lts
+op run --env-file=.env.op -- your-command
 ```
 
-## Personalization
+## Update
 
-After cloning, update `git/.gitconfig` with your own name and email:
-
-```gitconfig
-[user]
-    name = your-name
-    email = your-email@example.com
+```bash
+up
 ```
 
-## Structure
+This pulls dotfiles, then upgrades OS packages, mise tools and Neovim plugins.
 
-```
-dotfiles/
-├── install.sh          # Bootstrap script
-├── fish/               # Fish shell config
-│   └── .config/fish/
-│       ├── config.fish # Main config, abbreviations
-│       ├── functions/  # fs (session switcher), t (tmux project helper)
-│       └── conf.d/     # fzf, rustup
-├── git/                # Git config + global gitignore
-├── ghostty/            # Ghostty terminal config
-├── lazygit/            # Lazygit config
-├── starship/           # Starship prompt config
-├── tmux/               # Tmux config
-└── nvim/               # Neovim config (LazyVim)
-```
+## Change something
+
+| To change | Edit |
+|---|---|
+| CLI tools and runtimes | `home/dot_config/mise/config.toml` |
+| GUI apps and OS packages | `home/.chezmoidata/packages.yaml` |
+| macOS settings | `home/.chezmoiscripts/darwin/` |
+| Fedora settings | `home/.chezmoiscripts/fedora/` |
+
+Then run `chezmoi apply`. VS Code settings use its built-in Settings Sync.
+
+## Window management
+
+Fedora mirrors Rectangle Pro's default shortcuts where GNOME supports them natively.
+
+| Action | Mac and Fedora |
+|---|---|
+| Left or right half | `Ctrl+Alt+←` / `→` |
+| Maximize | `Ctrl+Alt+Return` |
+| Next display | `Ctrl+Alt+Cmd+←` / `→` |
+| Switch workspace | `Ctrl+1–9` |
+
+Quarters and thirds need a GNOME extension and aren't installed by default. [Tactile](https://extensions.gnome.org/extension/4548/tactile/) supports current GNOME.
 
 ## License
 

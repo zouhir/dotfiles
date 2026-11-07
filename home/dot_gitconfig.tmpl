@@ -1,0 +1,68 @@
+[user]
+    name = zouhir
+    email = zouhir@zouhir.org
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILW3hUMMO5pXVHDesYNvSPobUWI4AtPUEUgZsHDZU16l
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = "{{ .onePasswordSign }}"
+    allowedSignersFile = ~/.ssh/allowed_signers
+
+[commit]
+    gpgsign = true
+
+[core]
+    editor = nvim
+    excludesfile = ~/.gitignore_global
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = tokyonight_night
+    # TokyoNight Night diff colors
+    minus-style = syntax "#4a272f"
+    minus-emph-style = syntax "#f7768e"
+    plus-style = syntax "#243e4a"
+    plus-emph-style = syntax "#9ece6a"
+    hunk-header-style = syntax bold
+    file-style = "#7aa2f7" bold
+    file-decoration-style = "#7aa2f7" ul
+    line-numbers-minus-style = "#f7768e"
+    line-numbers-plus-style = "#9ece6a"
+
+[merge]
+    conflictstyle = zdiff3
+
+[diff]
+    colorMoved = default
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    dw = diff --word-diff
+
+[column]
+    ui = auto
+
+[fetch]
+    prune = true
+
+[rerere]
+    enabled = true
+
+[pull]
+    rebase = true
+
+[init]
+    defaultBranch = main
+
+# Push over SSH, but keep fetches on HTTPS so a new machine can clone plugins
+# before the 1Password agent is set up.
+[url "git@github.com:"]
+    pushInsteadOf = https://github.com/
