@@ -1,0 +1,4 @@
+# Only created when missing, because Codex rewrites this file itself.
+model_reasoning_effort = "xhigh"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
