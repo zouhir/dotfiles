@@ -64,6 +64,10 @@ Fedora mirrors Rectangle Pro's default shortcuts where GNOME supports them nativ
 
 Quarters and thirds need a GNOME extension and aren't installed by default. [Tactile](https://extensions.gnome.org/extension/4548/tactile/) supports current GNOME.
 
+## Keyboard
+
+On Fedora, [keyd](https://github.com/rvaiya/keyd) makes Super behave like Cmd: `Cmd+<key>` reaches apps as `Ctrl+<key>`, and Ctrl stays Ctrl for the terminal. `Cmd+C`/`V`, `Cmd+←`/`→`, `Cmd+Tab` and `Cmd+Space` work as on the Mac, and tapping Super alone still opens Activities.
+
 ## License
 
 MIT
