@@ -29,6 +29,7 @@ packages:
       - keyd
       - make
       - podman-docker
+      - tailscale
       - tmux
       - unzip
       - util-linux-user

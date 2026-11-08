@@ -38,10 +38,18 @@ gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 REPO
 fi
 
+if [ ! -f /etc/yum.repos.d/tailscale.repo ]; then
+    sudo curl -fsSL -o /etc/yum.repos.d/tailscale.repo \
+        https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+fi
+
 sudo dnf copr enable -y scottames/ghostty
 sudo dnf copr enable -y alternateved/keyd
 
 sudo dnf install -y{{ range .packages.fedora.dnf }} {{ . }}{{ end }}
+
+# Log in once by hand with `sudo tailscale up`; the daemon remembers it.
+sudo systemctl enable --now tailscaled
 
 # User installs need no polkit prompt, so this also works over SSH.
 flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
