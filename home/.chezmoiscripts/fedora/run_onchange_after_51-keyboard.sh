@@ -1,26 +1,39 @@
 #!/bin/bash
 set -euo pipefail
 
-# Matches the Mac: Ctrl+N switches workspace and Cmd+N reaches the app, where
-# Linux browsers expect Ctrl+N. Cmd+C/V/X use Insert keys so terminals stay safe.
+# Matches the Mac: Super acts as Cmd, so Cmd+T/W/L/1-9 reach apps as the Ctrl
+# shortcuts Linux expects, and Ctrl+N switches workspace. Cmd+C/V/X use Insert
+# keys so terminals stay safe. Tapping Super alone still opens Activities.
 sudo mkdir -p /etc/keyd
 sudo tee /etc/keyd/default.conf >/dev/null <<'KEYD'
 [ids]
 *
 
-[meta]
+[main]
+leftmeta = overload(cmd, leftmeta)
+
+[cmd:C]
 c = C-insert
 v = S-insert
 x = S-delete
-1 = C-1
-2 = C-2
-3 = C-3
-4 = C-4
-5 = C-5
-6 = C-6
-7 = C-7
-8 = C-8
-9 = C-9
+left = home
+right = end
+up = C-home
+down = C-end
+space = leftmeta
+tab = swapm(app_switch, M-tab)
+` = M-`
+pageup = M-pageup
+pagedown = M-pagedown
+
+# Holds Super while Cmd is down, so the switcher stays open across Tab presses.
+[app_switch:M]
+tab = M-tab
+
+# Ctrl+Alt+Cmd+arrows still move windows between monitors.
+[control+alt+cmd]
+left = C-A-M-left
+right = C-A-M-right
 
 [control]
 1 = M-1
