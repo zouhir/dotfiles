@@ -43,6 +43,9 @@ switch-to-workspace-7=['<Super>7']
 switch-to-workspace-8=['<Super>8']
 switch-to-workspace-9=['<Super>9']
 
+[org/gnome/shell]
+favorite-apps=['com.mitchellh.ghostty.desktop', 'google-chrome.desktop']
+
 [org/gnome/shell/keybindings]
 switch-to-application-1=@as []
 switch-to-application-2=@as []
