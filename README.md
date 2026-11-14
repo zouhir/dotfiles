@@ -53,20 +53,11 @@ Then run `chezmoi apply`. VS Code settings use its built-in Settings Sync.
 
 ## Window management
 
-Fedora mirrors Rectangle Pro's default shortcuts where GNOME supports them natively.
-
-| Action | Mac and Fedora |
-|---|---|
-| Left or right half | `Ctrl+Alt+←` / `→` |
-| Maximize | `Ctrl+Alt+Return` |
-| Next display | `Ctrl+Alt+Cmd+←` / `→` |
-| Switch workspace | `Ctrl+1–9` |
-
-Quarters and thirds need a GNOME extension and aren't installed by default. [Tactile](https://extensions.gnome.org/extension/4548/tactile/) supports current GNOME.
+On the Mac, Rectangle Pro handles window snapping with its default shortcuts. Fedora runs KDE Plasma with its own defaults.
 
 ## Keyboard
 
-On Fedora, [keyd](https://github.com/rvaiya/keyd) makes Super behave like Cmd: `Cmd+<key>` reaches apps as `Ctrl+<key>`, and Ctrl stays Ctrl for the terminal. `Cmd+C`/`V`, `Cmd+←`/`→`, `Cmd+Tab` and `Cmd+Space` work as on the Mac, and tapping Super alone still opens Activities.
+On Fedora, [keyd](https://github.com/rvaiya/keyd) makes Super behave like Cmd: `Cmd+<key>` reaches apps as `Ctrl+<key>`, and Ctrl stays Ctrl for the terminal. `Cmd+C`/`V`, `Cmd+←`/`→` and `Cmd+Space` work as on the Mac, and tapping Super alone still opens the app launcher.
 
 ## License
 

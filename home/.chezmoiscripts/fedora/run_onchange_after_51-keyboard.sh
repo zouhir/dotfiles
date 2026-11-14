@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Matches the Mac: Super acts as Cmd, so Cmd+T/W/L/1-9 reach apps as the Ctrl
-# shortcuts Linux expects, and Ctrl+N switches workspace. Cmd+C/V/X use Insert
-# keys so terminals stay safe. Tapping Super alone still opens Activities.
+# shortcuts Linux expects. Cmd+C/V/X use Insert keys so terminals stay safe.
+# Tapping Super alone still opens the app launcher.
 sudo mkdir -p /etc/keyd
 sudo tee /etc/keyd/default.conf >/dev/null <<'KEYD'
 [ids]
